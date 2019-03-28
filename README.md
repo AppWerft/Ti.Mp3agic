@@ -1,44 +1,6 @@
-# Appcelerator Titanium Mobile Module Project
+# Ti.Mp3agic
 
-This is a skeleton Titanium Mobile Mobile module project.
-
-## Module Naming
-
-Choose a unique module id for your module.  This ID usually follows a namespace
-convention using DNS notation.  For example, com.appcelerator.module.test.  This
-ID can only be used once by all public modules in Titanium.
-
-## Getting Started
-
-1. Edit the `manifest` with the appropriate details about your module.
-2. Edit the `LICENSE` to add your license details.
-3. Place any assets (such as PNG files) that are required anywhere in the module folder.
-4. Edit the `timodule.xml` and configure desired settings.
-5. Code and build.
-
-## Documentation
------------------------------
-
-You should provide at least minimal documentation for your module in `documentation` folder using the Markdown syntax.
-
-For more information on the Markdown syntax, refer to this documentation at:
-
-<http://daringfireball.net/projects/markdown/>
-
-## Example
-
-The `example` directory contains a skeleton application test harness that can be
-used for testing and providing an example of usage to the users of your module.
-
-## Building
-
-Simply run `appc run -p [ios|android] --build-only` which will compile and package your module.
-
-## Linting
-
-You can use `clang` to lint your code. A default Axway linting style is included inside the module main folder.
-Run `clang-format -style=file -i SRC_FILE` in the module root to lint the `SRC_FILE`. You can also patterns,
-like `clang-format -style=file -i Classes/*` 
+Module for extracting ID3 from mp3.
 
 ## Install
 
@@ -55,8 +17,6 @@ Copy the distribution zip file into the `~/Library/Application Support/Titanium`
 
 Copy the distribution zip file into the `~/.titanium` folder
 
-### Windows
-Copy the distribution zip file into the `C:\ProgramData\Titanium` folder
 
 ## Project Usage
 
@@ -72,36 +32,23 @@ and assets into the application.
 
 ## Example Usage
 
-To use your module in code, you will need to require it.
 
 ### ES6+ (recommended)
 
 ```js
 import MyModule from 'de.appwerft.mp3agic';
-MyModule.foo();
+const mp3file = MyModule.createMp3file(Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory,
+    'test.mp3'));
+// now you can call all methods.
+
+mp3file.getArtist();
+mp3file.getTitle();
+Ti.UI.createView({
+	backgroundImage : mp3file.getAlbumCover()
+})    
+    
+    
+    
+    
 ```
 
-### ES5
-
-```js
-var MyModule = require('de.appwerft.mp3agic');
-MyModule.foo();
-```
-
-## Testing
-
-To test your module with the example, use:
-
-```js
-appc run -p [ios|android]
-```
-
-This will execute the app.js in the example/ folder as a Titanium application.
-
-## Distribution
-
-You have a variety of choises for distributing your module
-- [Gitt.io](http://gitt.io/)
-- [Axway Marketplace](https://marketplace.axway.com/home)
-
-Code strong!
