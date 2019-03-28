@@ -160,6 +160,13 @@ public class Mp3fileProxy extends KrollProxy {
 			dict.put("comment", tag.getComment());
 			dict.put("lyrics", tag.getLyrics());
 			dict.put("composer", tag.getComposer());
+			dict.put("publisher", tag.getPublisher());
+
+			dict.put("originalartist", tag.getOriginalArtist());
+			dict.put("albumartist", tag.getAlbumArtist());
+			dict.put("copyright", tag.getCopyright());
+			dict.put("url", tag.getUrl());
+			dict.put("encoder", tag.getEncoder());
 			String mime = tag.getAlbumImageMimeType();
 			File temp;
 			try {
@@ -184,21 +191,26 @@ public class Mp3fileProxy extends KrollProxy {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 			return dict;
 		}
 		return null;
 	}
 
-@Kroll.getProperty
-@Kroll.method
-public String getAlbumimage() {
-	if (!mp3file.hasId3v2Tag()) return null;
+	@Kroll.getProperty
+	@Kroll.method
+	public String getAlbumimage() {
+		if (!mp3file.hasId3v2Tag())
+			return null;
 		ID3v2 tag = mp3file.getId3v2Tag();
 		String mime = tag.getAlbumImageMimeType();
+		String[] parts = mime.split("/");
+		String suffix = "png";
+		if (parts.length > 1)
+			suffix = parts[1];
 		File temp;
 		try {
-			temp = File.createTempFile("albumimage", "png", TiApplication.getInstance().getCacheDir());
+			temp = File.createTempFile("albumimage", suffix, TiApplication.getInstance().getCacheDir());
 			FileOutputStream fos = null;
 			try {
 				fos = new FileOutputStream(temp);
@@ -222,9 +234,10 @@ public String getAlbumimage() {
 		}
 		return null;
 	}
+
 	@Kroll.method
 	public TiViewProxy createAlbumimage(KrollDict opts) {
 		opts.put("mp3file", mp3file);
 		return new AlbumImageProxy(opts);
-	}	
+	}
 }
