@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0.0
+apiversion: 4
+architectures: arm64-v8a armeabi-v7a x86
+description: mp3agic
+author: Rainer
+license: Specify your license
+copyright: Copyright (c) 2019 by Your Company
+
+# these should not be edited
+name: mp3agic
+moduleid: de.appwerft.mp3agic
+guid: 1ac445ba-1bfb-4af3-9baf-7eb01643f2eb
+platform: android
+minsdk: 8.0.0.GA
