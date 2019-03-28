@@ -48,7 +48,7 @@ mp3file.getId3v1Tag();
 mp3file.getId3v2Tag();
 
 Ti.UI.createImageView({
-	image : mp3file.getAlbumimage
+	image : mp3file.getAlbumimage() // path to temp file
 })    
     
     
