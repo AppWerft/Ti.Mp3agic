@@ -46,8 +46,10 @@ mp3file.isVbr();
 mp3file.getSampleRate();
 mp3file.getId3v1Tag();
 mp3file.getId3v2Tag();
-mp3file.getCustomTag();
-    
+
+Ti.UI.createImageView({
+	image : mp3file.getAlbumimage
+})    
     
     
 ```

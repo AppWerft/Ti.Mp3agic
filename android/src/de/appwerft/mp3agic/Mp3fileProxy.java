@@ -190,4 +190,37 @@ public class Mp3fileProxy extends KrollProxy {
 		return null;
 	}
 
+@Kroll.getProperty
+@Kroll.method
+public String getAlbumimage() {
+	if (!mp3file.hasId3v2Tag()) return null;
+		ID3v2 tag = mp3file.getId3v2Tag();
+		String mime = tag.getAlbumImageMimeType();
+		File temp;
+		try {
+			temp = File.createTempFile("albumimage", "png", TiApplication.getInstance().getCacheDir());
+			FileOutputStream fos = null;
+			try {
+				fos = new FileOutputStream(temp);
+				fos.write(tag.getAlbumImage());
+			} catch (FileNotFoundException e) {
+			} catch (IOException ioe) {
+			} finally {
+				try {
+					if (fos != null) {
+						fos.close();
+						return temp.getAbsolutePath();
+
+					}
+				} catch (IOException ioe) {
+					System.out.println("Error while closing stream: " + ioe);
+				}
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return null;
+	}
+	
 }
