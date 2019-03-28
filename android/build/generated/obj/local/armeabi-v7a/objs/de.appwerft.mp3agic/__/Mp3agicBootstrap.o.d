@@ -60,7 +60,8 @@
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/JavaObject.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/EventEmitter.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/NativeObject.h \
- jni/de.appwerft.mp3agic.Mp3fileProxy.h
+ jni/de.appwerft.mp3agic.Mp3fileProxy.h \
+ jni/de.appwerft.mp3agic.AlbumImageProxy.h
 
 /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/v8.h:
 
@@ -185,3 +186,5 @@ jni/de.appwerft.mp3agic.Mp3agicModule.h:
 /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/NativeObject.h:
 
 jni/de.appwerft.mp3agic.Mp3fileProxy.h:
+
+jni/de.appwerft.mp3agic.AlbumImageProxy.h:

@@ -11,6 +11,7 @@
 
 #include "de.appwerft.mp3agic.Mp3agicModule.h"
 #include "de.appwerft.mp3agic.Mp3fileProxy.h"
+#include "de.appwerft.mp3agic.AlbumImageProxy.h"
 
 
 namespace titanium {
@@ -45,12 +46,14 @@ namespace titanium {
 
 		BindEntry* Mp3agicBindings::lookupGeneratedInit(const char* name, unsigned int length) {
 			static BindEntry binds[] = {
+				{"de.appwerft.mp3agic.AlbumImageProxy", ::de::appwerft::mp3agic::mp3agic::AlbumImageProxy::bindProxy, ::de::appwerft::mp3agic::mp3agic::AlbumImageProxy::dispose},
 				{"de.appwerft.mp3agic.Mp3fileProxy", ::de::appwerft::mp3agic::mp3agic::Mp3fileProxy::bindProxy, ::de::appwerft::mp3agic::mp3agic::Mp3fileProxy::dispose},
 				{"de.appwerft.mp3agic.Mp3agicModule", ::de::appwerft::mp3agic::Mp3agicModule::bindProxy, ::de::appwerft::mp3agic::Mp3agicModule::dispose}
 			};
 			static std::unordered_map<const char*, BindEntry&, Hash, Compare> map = {
 				{binds[0].name, binds[0]},
 				{binds[1].name, binds[1]},
+				{binds[2].name, binds[2]},
 			};
 
 			auto result = map.find(name);

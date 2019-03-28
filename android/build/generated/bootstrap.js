@@ -24,7 +24,7 @@ function moduleBootstrap(moduleBinding) {
 		invocationAPIs.push({ namespace: namespace, api: api });
 	}
 
-	addInvocationAPI(module, "Mp3agic", "Mp3agic", "createMp3file");
+	addInvocationAPI(module, "Mp3agic", "Mp3agic", "createAlbumImage");addInvocationAPI(module, "Mp3agic", "Mp3agic", "createMp3file");
 		if (!("__propertiesDefined__" in module)) {Object.defineProperties(module, {
 "Mp3file": {
 get: function() {
@@ -33,8 +33,18 @@ return Mp3file;
 },
 configurable: true
 },
+"AlbumImage": {
+get: function() {
+var AlbumImage =  lazyGet(this, "de.appwerft.mp3agic.AlbumImageProxy", "AlbumImage", "AlbumImage");
+return AlbumImage;
+},
+configurable: true
+},
 
 });
+module.constructor.prototype.createAlbumImage = function() {
+return new module["AlbumImage"](arguments);
+}
 module.constructor.prototype.createMp3file = function() {
 return new module["Mp3file"](arguments);
 }

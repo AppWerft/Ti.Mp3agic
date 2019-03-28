@@ -1,5 +1,7 @@
-/Users/fuerst/Documents/APPC_WORKSPACE/AUDIO/Ti.Mp3agic/android/build/generated/obj/local/arm64-v8a/objs/de.appwerft.mp3agic/__/Mp3agicBootstrap.o: \
- jni/../Mp3agicBootstrap.cpp \
+/Users/fuerst/Documents/APPC_WORKSPACE/AUDIO/Ti.Mp3agic/android/build/generated/obj/local/arm64-v8a/objs/de.appwerft.mp3agic/de.appwerft.mp3agic.AlbumImageProxy.o: \
+ jni/de.appwerft.mp3agic.AlbumImageProxy.cpp \
+ jni/de.appwerft.mp3agic.AlbumImageProxy.h \
+ /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/Proxy.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/v8.h \
  /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/../../android/support/include/stdint.h \
  /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/../../android/support/include/stdio.h \
@@ -32,35 +34,25 @@
  /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/__split_buffer \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/v8-version.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/v8config.h \
+ /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/JavaObject.h \
+ /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/EventEmitter.h \
+ /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/NativeObject.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/AndroidUtil.h \
  /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/../../android/support/include/stdlib.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/JNIUtil.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/AndroidUtil.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/JSException.h \
- /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/KrollBindings.h \
+ /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/TypeConverter.h \
  /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/map \
  /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/__tree \
  /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/functional \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/string \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/cstdio \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/cwchar \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/cwctype \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/cctype \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/../../android/support/include/ctype.h \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/../../android/support/include/wctype.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/V8Util.h \
- jni/../BootstrapJS.cpp jni/../KrollGeneratedBindings.cpp \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/unordered_map \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/__hash_table \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/cmath \
- /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/../../android/support/include/math.h \
- jni/de.appwerft.mp3agic.Mp3agicModule.h \
- /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/Proxy.h \
- /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/JavaObject.h \
- /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/EventEmitter.h \
- /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/NativeObject.h \
- jni/de.appwerft.mp3agic.Mp3fileProxy.h \
- jni/de.appwerft.mp3agic.AlbumImageProxy.h
+ /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/org.appcelerator.titanium.proxy.TiViewProxy.h \
+ /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/Proxy.h
+
+jni/de.appwerft.mp3agic.AlbumImageProxy.h:
+
+/Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/Proxy.h:
 
 /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/v8.h:
 
@@ -126,6 +118,12 @@
 
 /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/v8config.h:
 
+/Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/JavaObject.h:
+
+/Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/EventEmitter.h:
+
+/Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/NativeObject.h:
+
 /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/AndroidUtil.h:
 
 /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/../../android/support/include/stdlib.h:
@@ -136,7 +134,7 @@
 
 /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/JSException.h:
 
-/Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/KrollBindings.h:
+/Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/TypeConverter.h:
 
 /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/map:
 
@@ -144,44 +142,8 @@
 
 /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/functional:
 
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/string:
-
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/cstdio:
-
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/cwchar:
-
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/cwctype:
-
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/cctype:
-
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/../../android/support/include/ctype.h:
-
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/../../android/support/include/wctype.h:
-
 /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/V8Util.h:
 
-jni/../BootstrapJS.cpp:
-
-jni/../KrollGeneratedBindings.cpp:
-
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/unordered_map:
-
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/__hash_table:
-
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/cmath:
-
-/Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/../../android/support/include/math.h:
-
-jni/de.appwerft.mp3agic.Mp3agicModule.h:
+/Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/org.appcelerator.titanium.proxy.TiViewProxy.h:
 
 /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/Proxy.h:
-
-/Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/JavaObject.h:
-
-/Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/EventEmitter.h:
-
-/Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/NativeObject.h:
-
-jni/de.appwerft.mp3agic.Mp3fileProxy.h:
-
-jni/de.appwerft.mp3agic.AlbumImageProxy.h:
