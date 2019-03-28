@@ -32,13 +32,15 @@ private:
 	static v8::Persistent<v8::FunctionTemplate> proxyTemplate;
 
 	// Methods -----------------------------------------------------------
-	static void getSampleRate(const v8::FunctionCallbackInfo<v8::Value>&);
 	static void getBitrate(const v8::FunctionCallbackInfo<v8::Value>&);
 	static void getLengthInSeconds(const v8::FunctionCallbackInfo<v8::Value>&);
+	static void getSampleRate(const v8::FunctionCallbackInfo<v8::Value>&);
+	static void getAlbumimage(const v8::FunctionCallbackInfo<v8::Value>&);
 	static void getId3v2Tag(const v8::FunctionCallbackInfo<v8::Value>&);
 	static void getId3v1Tag(const v8::FunctionCallbackInfo<v8::Value>&);
 
 	// Dynamic property accessors ----------------------------------------
+	static void getter_albumimage(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
 	static void getter_bitrate(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
 	static void getter_lengthInSeconds(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
 	static void getter_sampleRate(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
