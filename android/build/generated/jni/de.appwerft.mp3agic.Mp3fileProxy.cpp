@@ -88,6 +88,7 @@ Local<FunctionTemplate> Mp3fileProxy::getProxyTemplate(v8::Isolate* isolate)
 	t->Set(titanium::Proxy::inheritSymbol.Get(isolate), FunctionTemplate::New(isolate, titanium::Proxy::inherit<Mp3fileProxy>));
 
 	// Method bindings --------------------------------------------------------
+	titanium::SetProtoMethod(isolate, t, "createAlbumimage", Mp3fileProxy::createAlbumimage);
 	titanium::SetProtoMethod(isolate, t, "getBitrate", Mp3fileProxy::getBitrate);
 	titanium::SetProtoMethod(isolate, t, "getLengthInSeconds", Mp3fileProxy::getLengthInSeconds);
 	titanium::SetProtoMethod(isolate, t, "getSampleRate", Mp3fileProxy::getSampleRate);
@@ -165,6 +166,105 @@ Local<FunctionTemplate> Mp3fileProxy::getProxyTemplate(v8::Local<v8::Context> co
 }
 
 // Methods --------------------------------------------------------------------
+void Mp3fileProxy::createAlbumimage(const FunctionCallbackInfo<Value>& args)
+{
+	LOGD(TAG, "createAlbumimage()");
+	Isolate* isolate = args.GetIsolate();
+	Local<Context> context = isolate->GetCurrentContext();
+	HandleScope scope(isolate);
+
+	JNIEnv *env = titanium::JNIScope::getEnv();
+	if (!env) {
+		titanium::JSException::GetJNIEnvironmentError(isolate);
+		return;
+	}
+	static jmethodID methodID = NULL;
+	if (!methodID) {
+		methodID = env->GetMethodID(Mp3fileProxy::javaClass, "createAlbumimage", "(Lorg/appcelerator/kroll/KrollDict;)Lorg/appcelerator/titanium/proxy/TiViewProxy;");
+		if (!methodID) {
+			const char *error = "Couldn't find proxy method 'createAlbumimage' with signature '(Lorg/appcelerator/kroll/KrollDict;)Lorg/appcelerator/titanium/proxy/TiViewProxy;'";
+			LOGE(TAG, error);
+				titanium::JSException::Error(isolate, error);
+				return;
+		}
+	}
+
+	Local<Object> holder = args.Holder();
+	if (!JavaObject::isJavaObject(holder)) {
+		holder = holder->FindInstanceInPrototypeChain(getProxyTemplate(isolate));
+	}
+	if (holder.IsEmpty() || holder->IsNull()) {
+		LOGE(TAG, "Couldn't obtain argument holder");
+		args.GetReturnValue().Set(v8::Undefined(isolate));
+		return;
+	}
+	titanium::Proxy* proxy = NativeObject::Unwrap<titanium::Proxy>(holder);
+	if (!proxy) {
+		args.GetReturnValue().Set(Undefined(isolate));
+		return;
+	}
+
+	if (args.Length() < 1) {
+		char errorStringBuffer[100];
+		sprintf(errorStringBuffer, "createAlbumimage: Invalid number of arguments. Expected 1 but got %d", args.Length());
+		titanium::JSException::Error(isolate, errorStringBuffer);
+		return;
+	}
+
+	jvalue jArguments[1];
+
+
+
+
+	bool isNew_0;
+	if (!args[0]->IsNull()) {
+		Local<Value> arg_0 = args[0];
+		jArguments[0].l =
+			titanium::TypeConverter::jsObjectToJavaKrollDict(
+				isolate,
+				env, arg_0, &isNew_0);
+	} else {
+		jArguments[0].l = NULL;
+	}
+
+
+	jobject javaProxy = proxy->getJavaObject();
+	if (javaProxy == NULL) {
+		args.GetReturnValue().Set(v8::Undefined(isolate));
+		return;
+	}
+	jobject jResult = (jobject)env->CallObjectMethodA(javaProxy, methodID, jArguments);
+
+
+
+	proxy->unreferenceJavaObject(javaProxy);
+
+
+
+			if (isNew_0) {
+				env->DeleteLocalRef(jArguments[0].l);
+			}
+
+
+	if (env->ExceptionCheck()) {
+		Local<Value> jsException = titanium::JSException::fromJavaException(isolate);
+		env->ExceptionClear();
+		return;
+	}
+
+	if (jResult == NULL) {
+		args.GetReturnValue().Set(Null(isolate));
+		return;
+	}
+
+	Local<Value> v8Result = titanium::TypeConverter::javaObjectToJsValue(isolate, env, jResult);
+
+	env->DeleteLocalRef(jResult);
+
+
+	args.GetReturnValue().Set(v8Result);
+
+}
 void Mp3fileProxy::getBitrate(const FunctionCallbackInfo<Value>& args)
 {
 	LOGD(TAG, "getBitrate()");

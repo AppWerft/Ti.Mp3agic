@@ -62,6 +62,10 @@ public class AlbumImageProxy extends TiViewProxy
 		super();
 	}
 
+	public AlbumImageProxy(KrollDict opts)
+	{
+		super();
+	}
 	@Override
 	public TiUIView createView(Activity activity)
 	{
@@ -71,34 +75,4 @@ public class AlbumImageProxy extends TiViewProxy
 		return view;
 	}
 
-	// Handle creation options
-	@Override
-	public void handleCreationDict(KrollDict options)
-	{
-		super.handleCreationDict(options);
-
-		if (options.containsKey("message")) {
-			Log.d(LCAT, "example created with message: " + options.get("message"));
-		}
-	}
-
-	// Methods
-	@Kroll.method
-	public void printMessage(String message)
-	{
-		Log.d(LCAT, "printing message: " + message);
-	}
-
-
-	@Kroll.getProperty @Kroll.method
-	public String getMessage()
-	{
-        return "Hello World from my module";
-	}
-
-	@Kroll.setProperty @Kroll.method
-	public void setMessage(String message)
-	{
-	    Log.d(LCAT, "Tried setting module message to: " + message);
-	}
 }

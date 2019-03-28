@@ -222,5 +222,9 @@ public String getAlbumimage() {
 		}
 		return null;
 	}
-	
+	@Kroll.method
+	public TiViewProxy createAlbumimage(KrollDict opts) {
+		opts.put("mp3file", mp3file);
+		return new AlbumImageProxy(opts);
+	}	
 }
