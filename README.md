@@ -39,14 +39,14 @@ and assets into the application.
 import MyModule from 'de.appwerft.mp3agic';
 const mp3file = MyModule.createMp3file(Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory,
     'test.mp3'));
-// now you can call all methods.
 
-mp3file.getArtist();
-mp3file.getTitle();
-Ti.UI.createView({
-	backgroundImage : mp3file.getAlbumCover()
-})    
-    
+mp3file.getLengthInSeconds();
+mp3file.getBitrate();
+mp3file.isVbr();
+mp3file.getSampleRate();
+mp3file.hasId3v1Tag();
+mp3file.hasId3v2Tag();
+mp3file.hasCustomTag();
     
     
     
