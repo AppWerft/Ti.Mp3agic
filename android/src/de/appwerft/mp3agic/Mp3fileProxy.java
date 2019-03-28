@@ -8,14 +8,22 @@
  */
 package de.appwerft.mp3agic;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
+import org.appcelerator.titanium.TiApplication;
+import org.appcelerator.titanium.TiBlob;
 import org.appcelerator.titanium.TiC;
+import org.appcelerator.titanium.io.TiBaseFile;
 import org.appcelerator.titanium.io.TiFile;
+import org.appcelerator.titanium.io.TiFileFactory;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
 import org.appcelerator.titanium.util.TiConvert;
@@ -24,11 +32,14 @@ import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
 import org.appcelerator.titanium.view.TiUIView;
 
+import com.mpatric.mp3agic.ID3v1;
+import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
 import android.app.Activity;
+import ti.modules.titanium.filesystem.FileProxy;
 
 // This proxy can be created by calling Mp3agic.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = Mp3agicModule.class)
@@ -37,6 +48,7 @@ public class Mp3fileProxy extends KrollProxy {
 	private static final String LCAT = "ExampleProxy";
 	private static final boolean DBG = TiConfig.LOGD;
 	private Mp3File mp3file;
+	public static final int TYPE_IMAGE = 0;
 
 	// Constructor
 	public Mp3fileProxy() {
@@ -46,41 +58,136 @@ public class Mp3fileProxy extends KrollProxy {
 	// Handle creation options
 	@Override
 	public void handleCreationArgs(KrollModule createdInModule, Object[] args) {
-		String filename=null;
-		if (args.length==0) {
-			Log.e(LCAT, "Paramter must be String or File");
-			return;
+
+		if (args.length == 0) {
+			throw new IllegalArgumentException("missing path value");
 		}
-		Object o = args[0];
-		if (o instanceof String) {
-			filename = (String)o;
-		}
-		if (o instanceof TiFile) {
-			filename = ((TiFile)o).nativePath();
-		}
+		Object readPath = args[0];
+		TiBaseFile inputFile = null;
 		try {
-			mp3file = new Mp3File(filename);
+
+			if (readPath instanceof TiFile) {
+				inputFile = TiFileFactory.createTitaniumFile(((TiFile) readPath).getFile().getAbsolutePath(), false);
+			} else {
+				if (readPath instanceof FileProxy) {
+					inputFile = ((FileProxy) readPath).getBaseFile();
+				} else {
+					if (readPath instanceof TiBaseFile) {
+						inputFile = (TiBaseFile) readPath;
+					} else {
+						// Assume path provided
+						inputFile = TiFileFactory.createTitaniumFile(readPath.toString(), false);
+					}
+				}
+			}
+			if (inputFile == null) {
+				return;
+			}
+			if (!inputFile.exists()) {
+				return;
+			}
+
+		} catch (Exception e) {
+
+			HashMap<String, Object> errEvent = new HashMap<String, Object>();
+			errEvent.put(TiC.PROPERTY_SUCCESS, false);
+			errEvent.put("message", e.getMessage());
+
+		}
+
+		try {
+			mp3file = new Mp3File(inputFile.getNativeFile());
 		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	// Methods
+	@Kroll.getProperty
 	@Kroll.method
-	public void printMessage(String message) {
-		Log.d(LCAT, "printing message: " + message);
+	public String getLengthInSeconds() {
+		return "" + mp3file.getLengthInSeconds();
 	}
 
 	@Kroll.getProperty
 	@Kroll.method
-	public String getMessage() {
-		return "Hello World from my module";
+	public int getBitrate() {
+		return mp3file.getBitrate();
 	}
 
-	@Kroll.setProperty
+	@Kroll.getProperty
 	@Kroll.method
-	public void setMessage(String message) {
-		Log.d(LCAT, "Tried setting module message to: " + message);
+	public int getSampleRate() {
+		return mp3file.getSampleRate();
 	}
+
+	@Kroll.getProperty
+	@Kroll.method
+	public KrollDict getId3v1Tag() {
+		if (mp3file.hasId3v1Tag()) {
+			KrollDict dict = new KrollDict();
+			ID3v1 id3v1Tag = mp3file.getId3v1Tag();
+			dict.put("track", id3v1Tag.getTrack());
+			dict.put("artist", id3v1Tag.getArtist());
+			dict.put("title", id3v1Tag.getTitle());
+			dict.put("album", id3v1Tag.getAlbum());
+			dict.put("year", id3v1Tag.getYear());
+			KrollDict genre = new KrollDict();
+			genre.put("name", id3v1Tag.getGenre());
+			genre.put("description", id3v1Tag.getGenreDescription());
+			dict.put("genre", genre);
+			dict.put("comment", id3v1Tag.getComment());
+			return dict;
+		}
+		return null;
+	}
+
+	@Kroll.getProperty
+	@Kroll.method
+	public KrollDict getId3v2Tag() {
+		if (mp3file.hasId3v2Tag()) {
+			KrollDict dict = new KrollDict();
+			ID3v2 tag = mp3file.getId3v2Tag();
+			dict.put("track", tag.getTrack());
+			dict.put("artist", tag.getArtist());
+			dict.put("title", tag.getTitle());
+			dict.put("album", tag.getAlbum());
+			dict.put("year", tag.getYear());
+			KrollDict genre = new KrollDict();
+			genre.put("name", tag.getGenre());
+			genre.put("description", tag.getGenreDescription());
+			dict.put("genre", genre);
+			dict.put("comment", tag.getComment());
+			dict.put("lyrics", tag.getLyrics());
+			dict.put("composer", tag.getComposer());
+			String mime = tag.getAlbumImageMimeType();
+			File temp;
+			try {
+				temp = File.createTempFile("albumimage", "png", TiApplication.getInstance().getCacheDir());
+				FileOutputStream fos = null;
+				try {
+					fos = new FileOutputStream(temp);
+					fos.write(tag.getAlbumImage());
+				} catch (FileNotFoundException e) {
+				} catch (IOException ioe) {
+				} finally {
+					try {
+						if (fos != null) {
+							fos.close();
+						}
+					} catch (IOException ioe) {
+						System.out.println("Error while closing stream: " + ioe);
+					}
+				}
+				dict.put("albumimage", temp.getAbsolutePath());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			return dict;
+		}
+		return null;
+	}
+
 }

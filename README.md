@@ -44,9 +44,9 @@ mp3file.getLengthInSeconds();
 mp3file.getBitrate();
 mp3file.isVbr();
 mp3file.getSampleRate();
-mp3file.hasId3v1Tag();
-mp3file.hasId3v2Tag();
-mp3file.hasCustomTag();
+mp3file.getId3v1Tag();
+mp3file.getId3v2Tag();
+mp3file.getCustomTag();
     
     
     
