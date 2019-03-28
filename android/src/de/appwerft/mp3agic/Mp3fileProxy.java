@@ -15,6 +15,7 @@ import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.titanium.TiC;
+import org.appcelerator.titanium.io.TiFile;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
 import org.appcelerator.titanium.util.TiConvert;
@@ -45,7 +46,18 @@ public class Mp3fileProxy extends KrollProxy {
 	// Handle creation options
 	@Override
 	public void handleCreationArgs(KrollModule createdInModule, Object[] args) {
-		String filename = (String)args[0];
+		String filename=null;
+		if (args.length==0) {
+			Log.e(LCAT, "Paramter must be String or File");
+			return;
+		}
+		Object o = args[0];
+		if (o instanceof String) {
+			filename = (String)o;
+		}
+		if (o instanceof TiFile) {
+			filename = ((TiFile)o).nativePath();
+		}
 		try {
 			mp3file = new Mp3File(filename);
 		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
