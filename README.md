@@ -105,6 +105,7 @@ You can get the path to image by:
 if (ID3.hasId3v2Tag) 
 	ID3.getAlbumImage();  // getting url
 ```
+It is an extra method because the images copies the image from mp3 to locale filesystem. 
 
 Or a view:
 
