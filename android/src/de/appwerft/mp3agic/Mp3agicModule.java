@@ -112,7 +112,14 @@ public class Mp3agicModule extends KrollModule {
 			return null;
 		}
 	}
-
+	@Kroll.method
+	public long getDuration(Object arg) {
+		TiBaseFile inputFile = getTiBaseFileFromInput(arg);
+		Mp3File mp3file = getID3fromMP3File(inputFile);
+		if (mp3file == null)
+			return 0;
+		return mp3file.getLengthInSeconds();
+	}
 	@Kroll.method
 	public KrollDict getId3Tag(Object arg) {
 		TiBaseFile inputFile = getTiBaseFileFromInput(arg);
@@ -129,7 +136,7 @@ public class Mp3agicModule extends KrollModule {
 		dict.put("lastmodified", mp3file.getLastModified());
 		dict.put("layer", mp3file.getLayer());
 		dict.put("length", mp3file.getLength());
-		dict.put("lengthsinseconds", mp3file.getLengthInSeconds());
+		dict.put("duration", mp3file.getLengthInSeconds());
 		dict.put("modeextension", mp3file.getModeExtension());
 		dict.put("samplerate", mp3file.getSampleRate());
 		dict.put("startoffset", mp3file.getStartOffset());
@@ -161,7 +168,6 @@ public class Mp3agicModule extends KrollModule {
 			dict.put("year", id3v1Tag.getYear());
 			dict.put("genre", id3v1Tag.getGenre());
 			dict.put("description", id3v1Tag.getGenreDescription());
-
 			dict.put("comment", id3v1Tag.getComment());
 			return dict;
 		}

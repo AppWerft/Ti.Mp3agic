@@ -32,6 +32,7 @@ private:
 
 	// Methods -----------------------------------------------------------
 	static void getAlbumimage(const v8::FunctionCallbackInfo<v8::Value>&);
+	static void getDuration(const v8::FunctionCallbackInfo<v8::Value>&);
 	static void getId3Tag(const v8::FunctionCallbackInfo<v8::Value>&);
 	static void getId3v2Tag(const v8::FunctionCallbackInfo<v8::Value>&);
 	static void getId3v1Tag(const v8::FunctionCallbackInfo<v8::Value>&);

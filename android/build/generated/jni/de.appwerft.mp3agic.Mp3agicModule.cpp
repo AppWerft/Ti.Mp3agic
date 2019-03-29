@@ -97,6 +97,7 @@ Local<FunctionTemplate> Mp3agicModule::getProxyTemplate(v8::Isolate* isolate)
 
 	// Method bindings --------------------------------------------------------
 	titanium::SetProtoMethod(isolate, t, "getAlbumimage", Mp3agicModule::getAlbumimage);
+	titanium::SetProtoMethod(isolate, t, "getDuration", Mp3agicModule::getDuration);
 	titanium::SetProtoMethod(isolate, t, "getId3Tag", Mp3agicModule::getId3Tag);
 	titanium::SetProtoMethod(isolate, t, "getId3v2Tag", Mp3agicModule::getId3v2Tag);
 	titanium::SetProtoMethod(isolate, t, "getId3v1Tag", Mp3agicModule::getId3v1Tag);
@@ -217,6 +218,100 @@ void Mp3agicModule::getAlbumimage(const FunctionCallbackInfo<Value>& args)
 	Local<Value> v8Result = titanium::TypeConverter::javaStringToJsString(isolate, env, jResult);
 
 	env->DeleteLocalRef(jResult);
+
+
+	args.GetReturnValue().Set(v8Result);
+
+}
+void Mp3agicModule::getDuration(const FunctionCallbackInfo<Value>& args)
+{
+	LOGD(TAG, "getDuration()");
+	Isolate* isolate = args.GetIsolate();
+	Local<Context> context = isolate->GetCurrentContext();
+	HandleScope scope(isolate);
+
+	JNIEnv *env = titanium::JNIScope::getEnv();
+	if (!env) {
+		titanium::JSException::GetJNIEnvironmentError(isolate);
+		return;
+	}
+	static jmethodID methodID = NULL;
+	if (!methodID) {
+		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getDuration", "(Ljava/lang/Object;)J");
+		if (!methodID) {
+			const char *error = "Couldn't find proxy method 'getDuration' with signature '(Ljava/lang/Object;)J'";
+			LOGE(TAG, error);
+				titanium::JSException::Error(isolate, error);
+				return;
+		}
+	}
+
+	Local<Object> holder = args.Holder();
+	if (!JavaObject::isJavaObject(holder)) {
+		holder = holder->FindInstanceInPrototypeChain(getProxyTemplate(isolate));
+	}
+	if (holder.IsEmpty() || holder->IsNull()) {
+		LOGE(TAG, "Couldn't obtain argument holder");
+		args.GetReturnValue().Set(v8::Undefined(isolate));
+		return;
+	}
+	titanium::Proxy* proxy = NativeObject::Unwrap<titanium::Proxy>(holder);
+	if (!proxy) {
+		args.GetReturnValue().Set(Undefined(isolate));
+		return;
+	}
+
+	if (args.Length() < 1) {
+		char errorStringBuffer[100];
+		sprintf(errorStringBuffer, "getDuration: Invalid number of arguments. Expected 1 but got %d", args.Length());
+		titanium::JSException::Error(isolate, errorStringBuffer);
+		return;
+	}
+
+	jvalue jArguments[1];
+
+
+
+
+	bool isNew_0;
+	if (!args[0]->IsNull()) {
+		Local<Value> arg_0 = args[0];
+		jArguments[0].l =
+			titanium::TypeConverter::jsValueToJavaObject(
+				isolate,
+				env, arg_0, &isNew_0);
+	} else {
+		jArguments[0].l = NULL;
+	}
+
+
+	jobject javaProxy = proxy->getJavaObject();
+	if (javaProxy == NULL) {
+		args.GetReturnValue().Set(v8::Undefined(isolate));
+		return;
+	}
+	jlong jResult = (jlong)env->CallLongMethodA(javaProxy, methodID, jArguments);
+
+
+
+	proxy->unreferenceJavaObject(javaProxy);
+
+
+
+			if (isNew_0) {
+				env->DeleteLocalRef(jArguments[0].l);
+			}
+
+
+	if (env->ExceptionCheck()) {
+		Local<Value> jsException = titanium::JSException::fromJavaException(isolate);
+		env->ExceptionClear();
+		return;
+	}
+
+
+	Local<Number> v8Result = titanium::TypeConverter::javaLongToJsNumber(isolate, env, jResult);
+
 
 
 	args.GetReturnValue().Set(v8Result);

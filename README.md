@@ -72,6 +72,22 @@ ID3.getId3v2Tag(mp3file);
 	"samplerate" : 48000
 }
 ```
+## ID3V1 - sample result
+
+```js
+{
+	"artist" : "WDR",
+	"year" : "2018",
+	"album" : "",
+	"genre" : -1,
+	"description" : "Unknown",
+	"comment" : "Oktober/November 1793: Die Gui",
+	"track" : null,
+	"title" : "BRÜDER (22/26): Die Revolution"
+}
+```
+
+
 ## ID3v2 - sample result:
 
 ```js
