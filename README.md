@@ -42,16 +42,12 @@ const mp3file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory,
     'test.mp3');
 const ID3 = ID3Module.createID3(mp3file);
 
-ID3.getLengthInSeconds();
-ID3.getBitrate();
-ID3.isVbr();
-ID3.getSampleRate();
 ID3.getId3Tag();
 ID3.getId3v1Tag();
 ID3.getId3v2Tag();
 
 ```
-## ID3 - sdample result: 
+## ID3 - sample result: 
 
 ```js
 {
