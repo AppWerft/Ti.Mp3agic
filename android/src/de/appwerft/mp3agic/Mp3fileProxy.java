@@ -47,8 +47,8 @@ public class Mp3fileProxy extends KrollProxy {
 		super();
 	}
 
-	// Handle creation options
-	@Override
+	
+	//@Override
 	public void handleCreationArgs(KrollModule createdInModule, Object[] args) {
 		Log.d(LCAT,"Length of options in createMp3file(): " + args.length);
 		if (args.length == 0) {
@@ -99,6 +99,7 @@ public class Mp3fileProxy extends KrollProxy {
 			Log.e(LCAT, e.getMessage());
 			e.printStackTrace();
 		}
+		super.handleCreationArgs(createdInModule, args);
 	}
 
 	@Kroll.getProperty
