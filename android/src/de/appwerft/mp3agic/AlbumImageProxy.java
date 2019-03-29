@@ -88,39 +88,12 @@ public class AlbumImageProxy extends TiViewProxy {
 	// Handle creation options
 	@Override
 	public void handleCreationDict(KrollDict opts) {
+		TiBaseFile inputFile = null;
+
 		if (!opts.containsKeyAndNotNull(TiC.PROPERTY_IMAGE))
 			throw new IllegalArgumentException("missing property " + TiC.PROPERTY_IMAGE);
-
-		Object readPath = opts.get(TiC.PROPERTY_IMAGE);
-		TiBaseFile inputFile = null;
-		try {
-			if (readPath instanceof TiFile) {
-				inputFile = TiFileFactory.createTitaniumFile(((TiFile) readPath).getFile().getAbsolutePath(), false);
-			} else {
-				if (readPath instanceof FileProxy) {
-					inputFile = ((FileProxy) readPath).getBaseFile();
-				} else {
-					if (readPath instanceof TiBaseFile) {
-						inputFile = (TiBaseFile) readPath;
-					} else {
-						// Assume path provided
-						inputFile = TiFileFactory.createTitaniumFile(readPath.toString(), false);
-					}
-				}
-			}
-			if (inputFile == null) {
-				return;
-			}
-			if (!inputFile.exists()) {
-				return;
-			}
-
-		} catch (Exception e) {
-			HashMap<String, Object> errEvent = new HashMap<String, Object>();
-			errEvent.put(TiC.PROPERTY_SUCCESS, false);
-			errEvent.put("message", e.getMessage());
-		}
-
+		inputFile = Mp3agicModule.getTiBaseFileFromInput(opts.get(TiC.PROPERTY_IMAGE));
+		Mp3File mp3file = Mp3agicModule.getID3fromMP3File(inputFile);
 		try {
 			mp3file = new Mp3File(inputFile.getNativeFile());
 			if (mp3file.hasId3v2Tag()) {
