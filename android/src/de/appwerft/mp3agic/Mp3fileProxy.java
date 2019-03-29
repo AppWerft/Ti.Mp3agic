@@ -133,10 +133,9 @@ public class Mp3fileProxy extends KrollProxy {
 			dict.put("title", id3v1Tag.getTitle());
 			dict.put("album", id3v1Tag.getAlbum());
 			dict.put("year", id3v1Tag.getYear());
-			KrollDict genre = new KrollDict();
-			genre.put("name", id3v1Tag.getGenre());
-			genre.put("description", id3v1Tag.getGenreDescription());
-			dict.put("genre", genre);
+			dict.put("genre", id3v1Tag.getGenre());
+			dict.put("description", id3v1Tag.getGenreDescription());
+			
 			dict.put("comment", id3v1Tag.getComment());
 			return dict;
 		}
@@ -163,44 +162,17 @@ public class Mp3fileProxy extends KrollProxy {
 			dict.put("title", tag.getTitle());
 			dict.put("album", tag.getAlbum());
 			dict.put("year", tag.getYear());
-			KrollDict genre = new KrollDict();
-			genre.put("name", tag.getGenre());
-			genre.put("description", tag.getGenreDescription());
-			dict.put("genre", genre);
+			dict.put("genre", tag.getGenre());
+			dict.put("description", tag.getGenreDescription());
 			dict.put("comment", tag.getComment());
 			dict.put("lyrics", tag.getLyrics());
 			dict.put("composer", tag.getComposer());
 			dict.put("publisher", tag.getPublisher());
-
 			dict.put("originalartist", tag.getOriginalArtist());
 			dict.put("albumartist", tag.getAlbumArtist());
 			dict.put("copyright", tag.getCopyright());
 			dict.put("url", tag.getUrl());
 			dict.put("encoder", tag.getEncoder());
-			File temp;
-			try {
-				temp = File.createTempFile("albumimage", "png", TiApplication.getInstance().getCacheDir());
-				FileOutputStream fos = null;
-				try {
-					fos = new FileOutputStream(temp);
-					fos.write(tag.getAlbumImage());
-				} catch (FileNotFoundException e) {
-				} catch (IOException ioe) {
-				} finally {
-					try {
-						if (fos != null) {
-							fos.close();
-						}
-					} catch (IOException ioe) {
-						System.out.println("Error while closing stream: " + ioe);
-					}
-				}
-				dict.put("albumimage", temp.getAbsolutePath());
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
 			return dict;
 		}
 		return null;
@@ -214,9 +186,9 @@ public class Mp3fileProxy extends KrollProxy {
 		ID3v2 tag = mp3file.getId3v2Tag();
 		String mime = tag.getAlbumImageMimeType();
 		String[] parts = mime.split("/");
-		String suffix = "png";
+		String suffix = ".png";
 		if (parts.length > 1)
-			suffix = parts[1];
+			suffix = "."+parts[1];
 		File temp;
 		try {
 			temp = File.createTempFile("albumimage", suffix, TiApplication.getInstance().getCacheDir());

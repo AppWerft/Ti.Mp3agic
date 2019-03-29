@@ -49,7 +49,20 @@ ID3.getSampleRate();
 ID3.getId3v1Tag();
 ID3.getId3v2Tag();
 
-if (ID3.hasId3v2Tag) {
+```
+## Album art work
+
+You can get the path to image by:
+
+```js
+if (ID3.hasId3v2Tag) 
+	ID3.getAlbumImage();  // getting url
+```
+
+Or a view:
+
+```js
+if (ID3.hasId3v2Tag) 
 	ID3Module.createAlbumView({
 		width : 100,
 		height : 100,
