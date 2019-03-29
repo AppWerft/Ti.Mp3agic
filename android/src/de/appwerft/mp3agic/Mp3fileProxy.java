@@ -120,7 +120,7 @@ public class Mp3fileProxy extends KrollProxy {
 		return mp3file.getSampleRate();
 	}
 
-	@Kroll.getProperty
+	
 	@Kroll.method
 	public KrollDict getId3Tag() {
 		KrollDict dict = new KrollDict();
@@ -160,7 +160,7 @@ public class Mp3fileProxy extends KrollProxy {
 			return dict;
 	}
 	
-	@Kroll.getProperty
+	
 	@Kroll.method
 	public KrollDict getId3v1Tag() {
 		KrollDict dict = new KrollDict();
@@ -191,7 +191,7 @@ public class Mp3fileProxy extends KrollProxy {
 	 * } }
 	 */
 
-	@Kroll.getProperty
+	
 	@Kroll.method
 	public KrollDict getId3v2Tag() {
 		if (this.mp3file.hasId3v2Tag()) {
@@ -218,7 +218,7 @@ public class Mp3fileProxy extends KrollProxy {
 		return null;
 	}
 
-	@Kroll.getProperty
+	
 	@Kroll.method
 	public String getAlbumimage() {
 		if (!mp3file.hasId3v2Tag())

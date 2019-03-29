@@ -41,13 +41,9 @@ private:
 	static void getId3v1Tag(const v8::FunctionCallbackInfo<v8::Value>&);
 
 	// Dynamic property accessors ----------------------------------------
-	static void getter_id3Tag(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
-	static void getter_albumimage(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
 	static void getter_bitrate(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
 	static void getter_lengthInSeconds(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
 	static void getter_sampleRate(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
-	static void getter_id3v2Tag(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
-	static void getter_id3v1Tag(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info);
 
 };
 

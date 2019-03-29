@@ -107,22 +107,6 @@ Local<FunctionTemplate> Mp3fileProxy::getProxyTemplate(v8::Isolate* isolate)
 
 	// Dynamic properties -----------------------------------------------------
 	instanceTemplate->SetAccessor(
-		NEW_SYMBOL(isolate, "id3Tag"),
-		Mp3fileProxy::getter_id3Tag,
-		titanium::Proxy::onPropertyChanged,
-		Local<Value>(),
-		DEFAULT,
-		static_cast<v8::PropertyAttribute>(v8::ReadOnly | v8::DontDelete)
-	);
-	instanceTemplate->SetAccessor(
-		NEW_SYMBOL(isolate, "albumimage"),
-		Mp3fileProxy::getter_albumimage,
-		titanium::Proxy::onPropertyChanged,
-		Local<Value>(),
-		DEFAULT,
-		static_cast<v8::PropertyAttribute>(v8::ReadOnly | v8::DontDelete)
-	);
-	instanceTemplate->SetAccessor(
 		NEW_SYMBOL(isolate, "bitrate"),
 		Mp3fileProxy::getter_bitrate,
 		titanium::Proxy::onPropertyChanged,
@@ -141,22 +125,6 @@ Local<FunctionTemplate> Mp3fileProxy::getProxyTemplate(v8::Isolate* isolate)
 	instanceTemplate->SetAccessor(
 		NEW_SYMBOL(isolate, "sampleRate"),
 		Mp3fileProxy::getter_sampleRate,
-		titanium::Proxy::onPropertyChanged,
-		Local<Value>(),
-		DEFAULT,
-		static_cast<v8::PropertyAttribute>(v8::ReadOnly | v8::DontDelete)
-	);
-	instanceTemplate->SetAccessor(
-		NEW_SYMBOL(isolate, "id3v2Tag"),
-		Mp3fileProxy::getter_id3v2Tag,
-		titanium::Proxy::onPropertyChanged,
-		Local<Value>(),
-		DEFAULT,
-		static_cast<v8::PropertyAttribute>(v8::ReadOnly | v8::DontDelete)
-	);
-	instanceTemplate->SetAccessor(
-		NEW_SYMBOL(isolate, "id3v1Tag"),
-		Mp3fileProxy::getter_id3v1Tag,
 		titanium::Proxy::onPropertyChanged,
 		Local<Value>(),
 		DEFAULT,
@@ -357,7 +325,6 @@ void Mp3fileProxy::getId3Tag(const FunctionCallbackInfo<Value>& args)
 
 	jvalue* jArguments = 0;
 
-	LOGW(TAG, "Automatic getter methods for properties are deprecated in SDK 8.0.0 and will be removed in SDK 9.0.0. Please access the property in standard JS style: obj.id3Tag; or obj['id3Tag'];");
 
 	jobject javaProxy = proxy->getJavaObject();
 	if (javaProxy == NULL) {
@@ -500,7 +467,6 @@ void Mp3fileProxy::getAlbumimage(const FunctionCallbackInfo<Value>& args)
 
 	jvalue* jArguments = 0;
 
-	LOGW(TAG, "Automatic getter methods for properties are deprecated in SDK 8.0.0 and will be removed in SDK 9.0.0. Please access the property in standard JS style: obj.albumimage; or obj['albumimage'];");
 
 	jobject javaProxy = proxy->getJavaObject();
 	if (javaProxy == NULL) {
@@ -574,7 +540,6 @@ void Mp3fileProxy::getId3v2Tag(const FunctionCallbackInfo<Value>& args)
 
 	jvalue* jArguments = 0;
 
-	LOGW(TAG, "Automatic getter methods for properties are deprecated in SDK 8.0.0 and will be removed in SDK 9.0.0. Please access the property in standard JS style: obj.id3v2Tag; or obj['id3v2Tag'];");
 
 	jobject javaProxy = proxy->getJavaObject();
 	if (javaProxy == NULL) {
@@ -648,7 +613,6 @@ void Mp3fileProxy::getId3v1Tag(const FunctionCallbackInfo<Value>& args)
 
 	jvalue* jArguments = 0;
 
-	LOGW(TAG, "Automatic getter methods for properties are deprecated in SDK 8.0.0 and will be removed in SDK 9.0.0. Please access the property in standard JS style: obj.id3v1Tag; or obj['id3v1Tag'];");
 
 	jobject javaProxy = proxy->getJavaObject();
 	if (javaProxy == NULL) {
@@ -684,156 +648,6 @@ void Mp3fileProxy::getId3v1Tag(const FunctionCallbackInfo<Value>& args)
 }
 
 // Dynamic property accessors -------------------------------------------------
-
-void Mp3fileProxy::getter_id3Tag(Local<Name> property, const PropertyCallbackInfo<Value>& args)
-{
-	Isolate* isolate = args.GetIsolate();
-	HandleScope scope(isolate);
-
-	JNIEnv *env = titanium::JNIScope::getEnv();
-	if (!env) {
-		titanium::JSException::GetJNIEnvironmentError(isolate);
-		return;
-	}
-
-	Local<Context> context = isolate->GetCurrentContext();
-	static jmethodID methodID = NULL;
-	if (!methodID) {
-		methodID = env->GetMethodID(Mp3fileProxy::javaClass, "getId3Tag", "()Lorg/appcelerator/kroll/KrollDict;");
-		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getId3Tag' with signature '()Lorg/appcelerator/kroll/KrollDict;'";
-			LOGE(TAG, error);
-				titanium::JSException::Error(isolate, error);
-				return;
-		}
-	}
-
-	Local<Object> holder = args.Holder();
-	if (!JavaObject::isJavaObject(holder)) {
-		holder = holder->FindInstanceInPrototypeChain(getProxyTemplate(isolate));
-	}
-	if (holder.IsEmpty() || holder->IsNull()) {
-		LOGE(TAG, "Couldn't obtain argument holder");
-		args.GetReturnValue().Set(v8::Undefined(isolate));
-		return;
-	}
-	titanium::Proxy* proxy = NativeObject::Unwrap<titanium::Proxy>(holder);
-	if (!proxy) {
-		args.GetReturnValue().Set(Undefined(isolate));
-		return;
-	}
-
-	jvalue* jArguments = 0;
-
-	jobject javaProxy = proxy->getJavaObject();
-	if (javaProxy == NULL) {
-		args.GetReturnValue().Set(v8::Undefined(isolate));
-		return;
-	}
-	jobject jResult = (jobject)env->CallObjectMethodA(javaProxy, methodID, jArguments);
-
-
-
-	proxy->unreferenceJavaObject(javaProxy);
-
-
-
-	if (env->ExceptionCheck()) {
-		Local<Value> jsException = titanium::JSException::fromJavaException(isolate);
-		env->ExceptionClear();
-		return;
-	}
-
-	if (jResult == NULL) {
-		args.GetReturnValue().Set(Null(isolate));
-		return;
-	}
-
-	Local<Value> v8Result = titanium::TypeConverter::javaObjectToJsValue(isolate, env, jResult);
-
-	env->DeleteLocalRef(jResult);
-
-
-	args.GetReturnValue().Set(v8Result);
-
-}
-
-
-
-void Mp3fileProxy::getter_albumimage(Local<Name> property, const PropertyCallbackInfo<Value>& args)
-{
-	Isolate* isolate = args.GetIsolate();
-	HandleScope scope(isolate);
-
-	JNIEnv *env = titanium::JNIScope::getEnv();
-	if (!env) {
-		titanium::JSException::GetJNIEnvironmentError(isolate);
-		return;
-	}
-
-	Local<Context> context = isolate->GetCurrentContext();
-	static jmethodID methodID = NULL;
-	if (!methodID) {
-		methodID = env->GetMethodID(Mp3fileProxy::javaClass, "getAlbumimage", "()Ljava/lang/String;");
-		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getAlbumimage' with signature '()Ljava/lang/String;'";
-			LOGE(TAG, error);
-				titanium::JSException::Error(isolate, error);
-				return;
-		}
-	}
-
-	Local<Object> holder = args.Holder();
-	if (!JavaObject::isJavaObject(holder)) {
-		holder = holder->FindInstanceInPrototypeChain(getProxyTemplate(isolate));
-	}
-	if (holder.IsEmpty() || holder->IsNull()) {
-		LOGE(TAG, "Couldn't obtain argument holder");
-		args.GetReturnValue().Set(v8::Undefined(isolate));
-		return;
-	}
-	titanium::Proxy* proxy = NativeObject::Unwrap<titanium::Proxy>(holder);
-	if (!proxy) {
-		args.GetReturnValue().Set(Undefined(isolate));
-		return;
-	}
-
-	jvalue* jArguments = 0;
-
-	jobject javaProxy = proxy->getJavaObject();
-	if (javaProxy == NULL) {
-		args.GetReturnValue().Set(v8::Undefined(isolate));
-		return;
-	}
-	jstring jResult = (jstring)env->CallObjectMethodA(javaProxy, methodID, jArguments);
-
-
-
-	proxy->unreferenceJavaObject(javaProxy);
-
-
-
-	if (env->ExceptionCheck()) {
-		Local<Value> jsException = titanium::JSException::fromJavaException(isolate);
-		env->ExceptionClear();
-		return;
-	}
-
-	if (jResult == NULL) {
-		args.GetReturnValue().Set(Null(isolate));
-		return;
-	}
-
-	Local<Value> v8Result = titanium::TypeConverter::javaStringToJsString(isolate, env, jResult);
-
-	env->DeleteLocalRef(jResult);
-
-
-	args.GetReturnValue().Set(v8Result);
-
-}
-
-
 
 void Mp3fileProxy::getter_bitrate(Local<Name> property, const PropertyCallbackInfo<Value>& args)
 {
@@ -1042,156 +856,6 @@ void Mp3fileProxy::getter_sampleRate(Local<Name> property, const PropertyCallbac
 
 	Local<Number> v8Result = titanium::TypeConverter::javaIntToJsNumber(isolate, env, jResult);
 
-
-
-	args.GetReturnValue().Set(v8Result);
-
-}
-
-
-
-void Mp3fileProxy::getter_id3v2Tag(Local<Name> property, const PropertyCallbackInfo<Value>& args)
-{
-	Isolate* isolate = args.GetIsolate();
-	HandleScope scope(isolate);
-
-	JNIEnv *env = titanium::JNIScope::getEnv();
-	if (!env) {
-		titanium::JSException::GetJNIEnvironmentError(isolate);
-		return;
-	}
-
-	Local<Context> context = isolate->GetCurrentContext();
-	static jmethodID methodID = NULL;
-	if (!methodID) {
-		methodID = env->GetMethodID(Mp3fileProxy::javaClass, "getId3v2Tag", "()Lorg/appcelerator/kroll/KrollDict;");
-		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getId3v2Tag' with signature '()Lorg/appcelerator/kroll/KrollDict;'";
-			LOGE(TAG, error);
-				titanium::JSException::Error(isolate, error);
-				return;
-		}
-	}
-
-	Local<Object> holder = args.Holder();
-	if (!JavaObject::isJavaObject(holder)) {
-		holder = holder->FindInstanceInPrototypeChain(getProxyTemplate(isolate));
-	}
-	if (holder.IsEmpty() || holder->IsNull()) {
-		LOGE(TAG, "Couldn't obtain argument holder");
-		args.GetReturnValue().Set(v8::Undefined(isolate));
-		return;
-	}
-	titanium::Proxy* proxy = NativeObject::Unwrap<titanium::Proxy>(holder);
-	if (!proxy) {
-		args.GetReturnValue().Set(Undefined(isolate));
-		return;
-	}
-
-	jvalue* jArguments = 0;
-
-	jobject javaProxy = proxy->getJavaObject();
-	if (javaProxy == NULL) {
-		args.GetReturnValue().Set(v8::Undefined(isolate));
-		return;
-	}
-	jobject jResult = (jobject)env->CallObjectMethodA(javaProxy, methodID, jArguments);
-
-
-
-	proxy->unreferenceJavaObject(javaProxy);
-
-
-
-	if (env->ExceptionCheck()) {
-		Local<Value> jsException = titanium::JSException::fromJavaException(isolate);
-		env->ExceptionClear();
-		return;
-	}
-
-	if (jResult == NULL) {
-		args.GetReturnValue().Set(Null(isolate));
-		return;
-	}
-
-	Local<Value> v8Result = titanium::TypeConverter::javaObjectToJsValue(isolate, env, jResult);
-
-	env->DeleteLocalRef(jResult);
-
-
-	args.GetReturnValue().Set(v8Result);
-
-}
-
-
-
-void Mp3fileProxy::getter_id3v1Tag(Local<Name> property, const PropertyCallbackInfo<Value>& args)
-{
-	Isolate* isolate = args.GetIsolate();
-	HandleScope scope(isolate);
-
-	JNIEnv *env = titanium::JNIScope::getEnv();
-	if (!env) {
-		titanium::JSException::GetJNIEnvironmentError(isolate);
-		return;
-	}
-
-	Local<Context> context = isolate->GetCurrentContext();
-	static jmethodID methodID = NULL;
-	if (!methodID) {
-		methodID = env->GetMethodID(Mp3fileProxy::javaClass, "getId3v1Tag", "()Lorg/appcelerator/kroll/KrollDict;");
-		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getId3v1Tag' with signature '()Lorg/appcelerator/kroll/KrollDict;'";
-			LOGE(TAG, error);
-				titanium::JSException::Error(isolate, error);
-				return;
-		}
-	}
-
-	Local<Object> holder = args.Holder();
-	if (!JavaObject::isJavaObject(holder)) {
-		holder = holder->FindInstanceInPrototypeChain(getProxyTemplate(isolate));
-	}
-	if (holder.IsEmpty() || holder->IsNull()) {
-		LOGE(TAG, "Couldn't obtain argument holder");
-		args.GetReturnValue().Set(v8::Undefined(isolate));
-		return;
-	}
-	titanium::Proxy* proxy = NativeObject::Unwrap<titanium::Proxy>(holder);
-	if (!proxy) {
-		args.GetReturnValue().Set(Undefined(isolate));
-		return;
-	}
-
-	jvalue* jArguments = 0;
-
-	jobject javaProxy = proxy->getJavaObject();
-	if (javaProxy == NULL) {
-		args.GetReturnValue().Set(v8::Undefined(isolate));
-		return;
-	}
-	jobject jResult = (jobject)env->CallObjectMethodA(javaProxy, methodID, jArguments);
-
-
-
-	proxy->unreferenceJavaObject(javaProxy);
-
-
-
-	if (env->ExceptionCheck()) {
-		Local<Value> jsException = titanium::JSException::fromJavaException(isolate);
-		env->ExceptionClear();
-		return;
-	}
-
-	if (jResult == NULL) {
-		args.GetReturnValue().Set(Null(isolate));
-		return;
-	}
-
-	Local<Value> v8Result = titanium::TypeConverter::javaObjectToJsValue(isolate, env, jResult);
-
-	env->DeleteLocalRef(jResult);
 
 
 	args.GetReturnValue().Set(v8Result);
