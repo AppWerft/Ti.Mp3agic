@@ -9,16 +9,22 @@
 package de.appwerft.mp3agic;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 
 import org.appcelerator.titanium.TiApplication;
+import org.appcelerator.titanium.TiC;
 import org.appcelerator.titanium.io.TiBaseFile;
+import org.appcelerator.titanium.io.TiFile;
+import org.appcelerator.titanium.io.TiFileFactory;
 
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
+
+import ti.modules.titanium.filesystem.FileProxy;
 
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
@@ -47,7 +53,47 @@ public class Mp3agicModule extends KrollModule
 		// put module init code that needs to run when the application is created
 	}
 
-	static Mp3File getID3fromMP3File(TiBaseFile inputFile) {
+	public static TiBaseFile getTiBaseFileFromInput(Object readPath) {
+		TiBaseFile inputFile = null;
+		try {
+			if (readPath instanceof TiFile) {
+				Log.d(LCAT, "file is TiFile");
+				inputFile = TiFileFactory.createTitaniumFile(((TiFile) readPath).getFile().getAbsolutePath(), false);
+			} else {
+				if (readPath instanceof FileProxy) {
+					Log.d(LCAT, "file is FileProxy");
+					inputFile = ((FileProxy) readPath).getBaseFile();
+				} else {
+					if (readPath instanceof TiBaseFile) {
+						Log.d(LCAT, "file is TiBaseFile");
+						inputFile = (TiBaseFile) readPath;
+					} else {
+						Log.d(LCAT, "file is String, Assume path provided");
+						// Assume path provided
+						inputFile = TiFileFactory.createTitaniumFile(readPath.toString(), false);
+					}
+				}
+			}
+			if (inputFile == null) {
+				Log.d(LCAT, "inputFile is null");
+				return null;
+			}
+			if (!inputFile.exists()) {
+				Log.d(LCAT, "inputFile doesn't exists");
+				return null;
+			}
+			return inputFile;
+
+		} catch (Exception e) {
+			HashMap<String, Object> errEvent = new HashMap<String, Object>();
+			errEvent.put(TiC.PROPERTY_SUCCESS, false);
+			errEvent.put("message", e.getMessage());
+			Log.e(LCAT, e.getMessage());
+		}
+		return null;
+	}
+	
+	public static Mp3File getID3fromMP3File(TiBaseFile inputFile) {
 		try {
 			return new Mp3File(inputFile.getNativeFile());
 			
