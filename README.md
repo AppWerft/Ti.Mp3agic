@@ -51,6 +51,32 @@ ID3.getId3v1Tag();
 ID3.getId3v2Tag();
 
 ```
+## ID3 - sdample result: 
+
+```js
+{
+	"modeextension" : "None",
+	"isvbr" : false,
+	"hasid3v1tag" : true,
+	"hasid3v2tag" : true,
+	"channelmode" : "Joint stereo",
+	"xingoffset" : -1,
+	"length" : 35821920,
+	"endoffset" : 35821791,
+	"lengthsinseconds" : 1786,
+	"bitrate" : 160,
+	"iscopyright" : false,
+	"layer" : "III",
+	"filename" : "/storage/emulated/0/de.appwerft.hoerdat/wdr3hoerspiel_2019-03-20_nachtmahl14_wdr3.mp3",
+	"framecount" : 74431,
+	"startoffset" : 94912,
+	"isoriginal" : false,
+	"lastmodified" : 1553777663000,
+	"emphasis" : "None",
+	"xingbitrate" : 0,
+	"samplerate" : 48000
+}
+```
 ## ID3v2 - sample result:
 
 ```js
