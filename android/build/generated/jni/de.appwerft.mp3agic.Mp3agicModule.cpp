@@ -138,9 +138,9 @@ void Mp3agicModule::getAlbumimage(const FunctionCallbackInfo<Value>& args)
 	}
 	static jmethodID methodID = NULL;
 	if (!methodID) {
-		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getAlbumimage", "(Ljava/lang/String;)Ljava/lang/String;");
+		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getAlbumimage", "(Ljava/lang/Object;)Ljava/lang/String;");
 		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getAlbumimage' with signature '(Ljava/lang/String;)Ljava/lang/String;'";
+			const char *error = "Couldn't find proxy method 'getAlbumimage' with signature '(Ljava/lang/Object;)Ljava/lang/String;'";
 			LOGE(TAG, error);
 				titanium::JSException::Error(isolate, error);
 				return;
@@ -174,13 +174,13 @@ void Mp3agicModule::getAlbumimage(const FunctionCallbackInfo<Value>& args)
 
 
 
-	
+	bool isNew_0;
 	if (!args[0]->IsNull()) {
 		Local<Value> arg_0 = args[0];
 		jArguments[0].l =
-			titanium::TypeConverter::jsValueToJavaString(
+			titanium::TypeConverter::jsValueToJavaObject(
 				isolate,
-				env, arg_0);
+				env, arg_0, &isNew_0);
 	} else {
 		jArguments[0].l = NULL;
 	}
@@ -199,7 +199,9 @@ void Mp3agicModule::getAlbumimage(const FunctionCallbackInfo<Value>& args)
 
 
 
+			if (isNew_0) {
 				env->DeleteLocalRef(jArguments[0].l);
+			}
 
 
 	if (env->ExceptionCheck()) {
@@ -235,9 +237,9 @@ void Mp3agicModule::getId3Tag(const FunctionCallbackInfo<Value>& args)
 	}
 	static jmethodID methodID = NULL;
 	if (!methodID) {
-		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getId3Tag", "(Ljava/lang/String;)Lorg/appcelerator/kroll/KrollDict;");
+		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getId3Tag", "(Ljava/lang/Object;)Lorg/appcelerator/kroll/KrollDict;");
 		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getId3Tag' with signature '(Ljava/lang/String;)Lorg/appcelerator/kroll/KrollDict;'";
+			const char *error = "Couldn't find proxy method 'getId3Tag' with signature '(Ljava/lang/Object;)Lorg/appcelerator/kroll/KrollDict;'";
 			LOGE(TAG, error);
 				titanium::JSException::Error(isolate, error);
 				return;
@@ -271,13 +273,13 @@ void Mp3agicModule::getId3Tag(const FunctionCallbackInfo<Value>& args)
 
 
 
-	
+	bool isNew_0;
 	if (!args[0]->IsNull()) {
 		Local<Value> arg_0 = args[0];
 		jArguments[0].l =
-			titanium::TypeConverter::jsValueToJavaString(
+			titanium::TypeConverter::jsValueToJavaObject(
 				isolate,
-				env, arg_0);
+				env, arg_0, &isNew_0);
 	} else {
 		jArguments[0].l = NULL;
 	}
@@ -296,7 +298,9 @@ void Mp3agicModule::getId3Tag(const FunctionCallbackInfo<Value>& args)
 
 
 
+			if (isNew_0) {
 				env->DeleteLocalRef(jArguments[0].l);
+			}
 
 
 	if (env->ExceptionCheck()) {
@@ -332,9 +336,9 @@ void Mp3agicModule::getId3v2Tag(const FunctionCallbackInfo<Value>& args)
 	}
 	static jmethodID methodID = NULL;
 	if (!methodID) {
-		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getId3v2Tag", "(Ljava/lang/String;)Lorg/appcelerator/kroll/KrollDict;");
+		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getId3v2Tag", "(Ljava/lang/Object;)Lorg/appcelerator/kroll/KrollDict;");
 		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getId3v2Tag' with signature '(Ljava/lang/String;)Lorg/appcelerator/kroll/KrollDict;'";
+			const char *error = "Couldn't find proxy method 'getId3v2Tag' with signature '(Ljava/lang/Object;)Lorg/appcelerator/kroll/KrollDict;'";
 			LOGE(TAG, error);
 				titanium::JSException::Error(isolate, error);
 				return;
@@ -368,13 +372,13 @@ void Mp3agicModule::getId3v2Tag(const FunctionCallbackInfo<Value>& args)
 
 
 
-	
+	bool isNew_0;
 	if (!args[0]->IsNull()) {
 		Local<Value> arg_0 = args[0];
 		jArguments[0].l =
-			titanium::TypeConverter::jsValueToJavaString(
+			titanium::TypeConverter::jsValueToJavaObject(
 				isolate,
-				env, arg_0);
+				env, arg_0, &isNew_0);
 	} else {
 		jArguments[0].l = NULL;
 	}
@@ -393,7 +397,9 @@ void Mp3agicModule::getId3v2Tag(const FunctionCallbackInfo<Value>& args)
 
 
 
+			if (isNew_0) {
 				env->DeleteLocalRef(jArguments[0].l);
+			}
 
 
 	if (env->ExceptionCheck()) {
@@ -429,9 +435,9 @@ void Mp3agicModule::getId3v1Tag(const FunctionCallbackInfo<Value>& args)
 	}
 	static jmethodID methodID = NULL;
 	if (!methodID) {
-		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getId3v1Tag", "(Ljava/lang/String;)Lorg/appcelerator/kroll/KrollDict;");
+		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getId3v1Tag", "(Ljava/lang/Object;)Lorg/appcelerator/kroll/KrollDict;");
 		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getId3v1Tag' with signature '(Ljava/lang/String;)Lorg/appcelerator/kroll/KrollDict;'";
+			const char *error = "Couldn't find proxy method 'getId3v1Tag' with signature '(Ljava/lang/Object;)Lorg/appcelerator/kroll/KrollDict;'";
 			LOGE(TAG, error);
 				titanium::JSException::Error(isolate, error);
 				return;
@@ -465,13 +471,13 @@ void Mp3agicModule::getId3v1Tag(const FunctionCallbackInfo<Value>& args)
 
 
 
-	
+	bool isNew_0;
 	if (!args[0]->IsNull()) {
 		Local<Value> arg_0 = args[0];
 		jArguments[0].l =
-			titanium::TypeConverter::jsValueToJavaString(
+			titanium::TypeConverter::jsValueToJavaObject(
 				isolate,
-				env, arg_0);
+				env, arg_0, &isNew_0);
 	} else {
 		jArguments[0].l = NULL;
 	}
@@ -490,7 +496,9 @@ void Mp3agicModule::getId3v1Tag(const FunctionCallbackInfo<Value>& args)
 
 
 
+			if (isNew_0) {
 				env->DeleteLocalRef(jArguments[0].l);
+			}
 
 
 	if (env->ExceptionCheck()) {
