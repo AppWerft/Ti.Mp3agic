@@ -60,7 +60,10 @@ public class Mp3agicModule extends KrollModule
 	}
 
 	public static TiBaseFile getTiBaseFileFromInput(Object readPath) {
-		Log.d(LCAT,(readPath==null) ? "null" :" not null");
+		if (readPath==null) {
+			Log.e(LCAT, "parameter must be a string (path) or a file object");
+			return null;
+		}
 		
 		Log.d(LCAT,readPath.getClass().getName());
 		TiBaseFile inputFile = null;
