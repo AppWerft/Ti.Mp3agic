@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import org.appcelerator.kroll.KrollDict;
+import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
@@ -39,9 +40,10 @@ import ti.modules.titanium.filesystem.FileProxy;
 public class Mp3fileProxy extends KrollProxy {
 	// Standard Debugging variables
 	private static final String LCAT = "⚙️TiID3";
-	private Mp3File mp3file;
+	
 	public static final int TYPE_IMAGE = 0;
-
+	TiBaseFile inputFile = null;
+	
 	// Constructor
 	public Mp3fileProxy() {
 		super();
@@ -58,7 +60,7 @@ public class Mp3fileProxy extends KrollProxy {
 		Log.d(LCAT,readPath.toString());
 		Log.d(LCAT,readPath.getClass().getName());
 		
-		TiBaseFile inputFile = null;
+		
 		try {
 			if (readPath instanceof TiFile) {
 				Log.d(LCAT, "file is TiFile");
@@ -93,36 +95,24 @@ public class Mp3fileProxy extends KrollProxy {
 			errEvent.put("message", e.getMessage());
 			Log.e(LCAT, e.getMessage());
 		}
-		try {
-			mp3file = new Mp3File(inputFile.getNativeFile());
-		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
-			Log.e(LCAT, e.getMessage());
-			e.printStackTrace();
-		}
+		
 		super.handleCreationArgs(createdInModule, args);
 	}
 
-	@Kroll.getProperty
-	@Kroll.method
-	public String getLengthInSeconds() {
-		return "" + mp3file.getLengthInSeconds();
+	private static Mp3File getID3() {
+		try {
+			return new Mp3File(inputFile.getNativeFile());
+			
+		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
+			Log.e(LCAT, e.getMessage());
+			return null;
+		}
 	}
-
-	@Kroll.getProperty
-	@Kroll.method
-	public int getBitrate() {
-		return mp3file.getBitrate();
-	}
-
-	@Kroll.getProperty
-	@Kroll.method
-	public int getSampleRate() {
-		return mp3file.getSampleRate();
-	}
-
 	
 	@Kroll.method
 	public KrollDict getId3Tag() {
+		Mp3File mp3file = getID3();
+		if (mp3file==null) return null;
 		KrollDict dict = new KrollDict();
 		if (mp3file == null) return null;
 			dict.put("bitrate", mp3file.getBitrate());
@@ -145,24 +135,14 @@ public class Mp3fileProxy extends KrollProxy {
 			dict.put("isvbr", mp3file.isVbr());
 			dict.put("hasid3v1tag", mp3file.hasId3v1Tag());
 			dict.put("hasid3v2tag", mp3file.hasId3v2Tag());
-			
-			
-			
-			
-			
-			
-			
-			
-						
-			
-			
-			
 			return dict;
 	}
 	
 	
 	@Kroll.method
 	public KrollDict getId3v1Tag() {
+		Mp3File mp3file = getID3();
+		if (mp3file==null) return null;
 		KrollDict dict = new KrollDict();
 		if (mp3file == null)
 			return null;
@@ -194,7 +174,9 @@ public class Mp3fileProxy extends KrollProxy {
 	
 	@Kroll.method
 	public KrollDict getId3v2Tag() {
-		if (this.mp3file.hasId3v2Tag()) {
+		if (mp3file==null) return null;
+		Mp3File mp3file = getID3();
+		if (mp3file.hasId3v2Tag()) {
 			KrollDict dict = new KrollDict();
 			ID3v2 tag = mp3file.getId3v2Tag();
 			dict.put("track", tag.getTrack());
@@ -221,6 +203,8 @@ public class Mp3fileProxy extends KrollProxy {
 	
 	@Kroll.method
 	public String getAlbumimage() {
+		Mp3File mp3file = getID3();
+		if (mp3file==null) return null;
 		if (!mp3file.hasId3v2Tag())
 			return null;
 		ID3v2 tag = mp3file.getId3v2Tag();
