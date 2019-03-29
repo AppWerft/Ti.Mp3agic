@@ -57,10 +57,7 @@ public class Mp3fileProxy extends KrollProxy {
 			throw new IllegalArgumentException("missing path value");
 		}
 		Object readPath = args[0];
-		Log.d(LCAT,readPath.toString());
-		Log.d(LCAT,readPath.getClass().getName());
-		
-		
+	
 		try {
 			if (readPath instanceof TiFile) {
 				Log.d(LCAT, "file is TiFile");
@@ -99,19 +96,9 @@ public class Mp3fileProxy extends KrollProxy {
 		super.handleCreationArgs(createdInModule, args);
 	}
 
-	private static Mp3File getID3() {
-		try {
-			return new Mp3File(inputFile.getNativeFile());
-			
-		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
-			Log.e(LCAT, e.getMessage());
-			return null;
-		}
-	}
-	
 	@Kroll.method
 	public KrollDict getId3Tag() {
-		Mp3File mp3file = getID3();
+		Mp3File mp3file = Mp3agicModule.createID3FromMP3File(inputFile);
 		if (mp3file==null) return null;
 		KrollDict dict = new KrollDict();
 		if (mp3file == null) return null;
@@ -141,7 +128,7 @@ public class Mp3fileProxy extends KrollProxy {
 	
 	@Kroll.method
 	public KrollDict getId3v1Tag() {
-		Mp3File mp3file = getID3();
+		Mp3File mp3file = Mp3agicModule.createID3FromMP3File(inputFile);
 		if (mp3file==null) return null;
 		KrollDict dict = new KrollDict();
 		if (mp3file == null)
@@ -174,8 +161,9 @@ public class Mp3fileProxy extends KrollProxy {
 	
 	@Kroll.method
 	public KrollDict getId3v2Tag() {
+		Mp3File mp3file = Mp3agicModule.createID3FromMP3File(inputFile);
 		if (mp3file==null) return null;
-		Mp3File mp3file = getID3();
+		
 		if (mp3file.hasId3v2Tag()) {
 			KrollDict dict = new KrollDict();
 			ID3v2 tag = mp3file.getId3v2Tag();
@@ -203,7 +191,7 @@ public class Mp3fileProxy extends KrollProxy {
 	
 	@Kroll.method
 	public String getAlbumimage() {
-		Mp3File mp3file = getID3();
+		Mp3File mp3file = Mp3agicModule.createID3FromMP3File(inputFile);
 		if (mp3file==null) return null;
 		if (!mp3file.hasId3v2Tag())
 			return null;
