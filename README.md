@@ -99,6 +99,9 @@ ID3.getId3v2Tag();
 
 ## Album art work
 
+
+<img src="https://i.imgur.com/kfzcWu1.jpg" width=400 />
+
 You can get the path to image by:
 
 ```js
