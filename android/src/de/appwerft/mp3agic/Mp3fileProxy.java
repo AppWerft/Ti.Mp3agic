@@ -122,6 +122,46 @@ public class Mp3fileProxy extends KrollProxy {
 
 	@Kroll.getProperty
 	@Kroll.method
+	public KrollDict getId3Tag() {
+		KrollDict dict = new KrollDict();
+		if (mp3file == null) return null;
+			dict.put("bitrate", mp3file.getBitrate());
+			dict.put("channelmode", mp3file.getChannelMode());
+			dict.put("emphasis", mp3file.getEmphasis());
+			dict.put("endoffset", mp3file.getEndOffset());
+			dict.put("filename", mp3file.getFilename());
+			dict.put("framecount", mp3file.getFrameCount());
+			dict.put("lastmodified", mp3file.getLastModified());
+			dict.put("layer", mp3file.getLayer());
+			dict.put("length", mp3file.getLength());
+			dict.put("lengthsinseconds", mp3file.getLengthInSeconds());
+			dict.put("modeextension", mp3file.getModeExtension());
+			dict.put("samplerate", mp3file.getSampleRate());
+			dict.put("startoffset", mp3file.getStartOffset());
+			dict.put("xingbitrate", mp3file.getXingBitrate());
+			dict.put("xingoffset", mp3file.getXingOffset());
+			dict.put("iscopyright", mp3file.isCopyright());
+			dict.put("isoriginal", mp3file.isOriginal());
+			dict.put("isvbr", mp3file.isVbr());
+			dict.put("hasid3v1tag", mp3file.hasId3v1Tag());
+			dict.put("hasid3v2tag", mp3file.hasId3v2Tag());
+			
+			
+			
+			
+			
+			
+			
+			
+						
+			
+			
+			
+			return dict;
+	}
+	
+	@Kroll.getProperty
+	@Kroll.method
 	public KrollDict getId3v1Tag() {
 		KrollDict dict = new KrollDict();
 		if (mp3file == null)
@@ -202,7 +242,7 @@ public class Mp3fileProxy extends KrollProxy {
 				try {
 					if (fos != null) {
 						fos.close();
-						return temp.getAbsolutePath();
+						return "file://"+temp.getAbsolutePath();
 
 					}
 				} catch (IOException ioe) {

@@ -46,10 +46,35 @@ ID3.getLengthInSeconds();
 ID3.getBitrate();
 ID3.isVbr();
 ID3.getSampleRate();
+ID3.getId3Tag();
 ID3.getId3v1Tag();
 ID3.getId3v2Tag();
 
 ```
+## ID3v2 - sample result:
+
+```js
+{
+	"copyright" : null,
+	"artist" : "Rainer Nikowitz",
+	"year" : "2018",
+	"album" : "WDR 3 Hörspiel",
+	"composer" : null,
+	"description" : "Podcast",
+	"title" : "Nachtmahl (1/4) | WDR 3 Hörspiel (30.07.2018)",
+	"encoder" : null,
+	"url" : null,
+	"genre" : -1,
+	"publisher" : null,
+	"originalartist" : null,
+	"comment" : "Sommerschwüle über Niederösterreich und eine mückenzerstochene Leiche. Nach \"Volksfest\" der zweite Fall des Antihelden Suchanek, der unerwartetes Kriminologen-Talent besitzt. // Von Rainer Nikowitz /  Bearbeitung und Regie: Jörg Schlüter /  Komposition: Bernd Keul / WDR 2016 / www.hoerspiel.wdr.de",
+	"track" : null,
+	"lyrics" : null,
+	"albumartist" : "Rainer Nikowitz"
+}
+```
+
+
 ## Album art work
 
 You can get the path to image by:
@@ -70,4 +95,6 @@ if (ID3.hasId3v2Tag)
 	})    
 }    
 ```
+
+
 
