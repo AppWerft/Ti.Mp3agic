@@ -36,15 +36,14 @@ and assets into the application.
 ### ES6+ (recommended)
 
 ```js
-import ID3Module from 'de.appwerft.mp3agic';
+import ID3 from 'de.appwerft.mp3agic';
 
 const mp3file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory,
     'test.mp3');
-const ID3 = ID3Module.createID3(mp3file);
 
-ID3.getId3Tag();
-ID3.getId3v1Tag();
-ID3.getId3v2Tag();
+ID3.getId3Tag(mp3file);
+ID3.getId3v1Tag(mp3file);
+ID3.getId3v2Tag(mp3file);
 
 ```
 ## ID3 - sample result: 

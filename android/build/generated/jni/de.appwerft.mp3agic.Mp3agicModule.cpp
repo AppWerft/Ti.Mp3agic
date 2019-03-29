@@ -18,7 +18,6 @@
 
 
 #include "de.appwerft.mp3agic.AlbumImageProxy.h"
-#include "de.appwerft.mp3agic.Mp3fileProxy.h"
 
 #include "org.appcelerator.kroll.KrollModule.h"
 

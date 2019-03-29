@@ -48,7 +48,6 @@
  /Users/fuerst/Library/Android/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/functional \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/V8Util.h \
  jni/de.appwerft.mp3agic.AlbumImageProxy.h \
- jni/de.appwerft.mp3agic.Mp3fileProxy.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/org.appcelerator.kroll.KrollModule.h \
  /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/Proxy.h
 
@@ -147,8 +146,6 @@ jni/de.appwerft.mp3agic.Mp3agicModule.h:
 /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/V8Util.h:
 
 jni/de.appwerft.mp3agic.AlbumImageProxy.h:
-
-jni/de.appwerft.mp3agic.Mp3fileProxy.h:
 
 /Users/fuerst/Library/Application\ Support/Titanium/mobilesdk/osx/8.0.0.GA/android/native/include/org.appcelerator.kroll.KrollModule.h:
 

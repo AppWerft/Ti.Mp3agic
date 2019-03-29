@@ -1,6 +1,5 @@
 "/Users/fuerst/Documents/APPC_WORKSPACE/AUDIO/Ti.Mp3agic/android/src/de/appwerft/mp3agic/AlbumImageProxy.java"
 "/Users/fuerst/Documents/APPC_WORKSPACE/AUDIO/Ti.Mp3agic/android/src/de/appwerft/mp3agic/Mp3agicModule.java"
-"/Users/fuerst/Documents/APPC_WORKSPACE/AUDIO/Ti.Mp3agic/android/src/de/appwerft/mp3agic/Mp3fileProxy.java"
 "/Users/fuerst/Documents/APPC_WORKSPACE/AUDIO/Ti.Mp3agic/android/build/generated/java/de/appwerft/mp3agic/Mp3agicBootstrap.java"
 "/Users/fuerst/Documents/APPC_WORKSPACE/AUDIO/Ti.Mp3agic/android/build/generated/r/android/support/compat/R.java"
 "/Users/fuerst/Documents/APPC_WORKSPACE/AUDIO/Ti.Mp3agic/android/build/generated/r/android/support/coreui/R.java"
