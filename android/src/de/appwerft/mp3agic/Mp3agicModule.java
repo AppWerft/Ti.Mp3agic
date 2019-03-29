@@ -8,10 +8,18 @@
  */
 package de.appwerft.mp3agic;
 
+import java.io.IOException;
+
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 
 import org.appcelerator.titanium.TiApplication;
+import org.appcelerator.titanium.io.TiBaseFile;
+
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.Mp3File;
+import com.mpatric.mp3agic.UnsupportedTagException;
+
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
 
@@ -39,7 +47,15 @@ public class Mp3agicModule extends KrollModule
 		// put module init code that needs to run when the application is created
 	}
 
-	
+	static Mp3File getID3fromMP3File(TiBaseFile inputFile) {
+		try {
+			return new Mp3File(inputFile.getNativeFile());
+			
+		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
+			Log.e(LCAT, e.getMessage());
+			return null;
+		}
+	}
 
 }
 

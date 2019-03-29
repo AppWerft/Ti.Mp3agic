@@ -98,7 +98,7 @@ public class Mp3fileProxy extends KrollProxy {
 
 	@Kroll.method
 	public KrollDict getId3Tag() {
-		Mp3File mp3file = Mp3agicModule.createID3FromMP3File(inputFile);
+		Mp3File mp3file = Mp3agicModule.getID3fromMP3File(inputFile);
 		if (mp3file==null) return null;
 		KrollDict dict = new KrollDict();
 		if (mp3file == null) return null;
@@ -128,7 +128,7 @@ public class Mp3fileProxy extends KrollProxy {
 	
 	@Kroll.method
 	public KrollDict getId3v1Tag() {
-		Mp3File mp3file = Mp3agicModule.createID3FromMP3File(inputFile);
+		Mp3File mp3file = Mp3agicModule.getID3fromMP3File(inputFile);
 		if (mp3file==null) return null;
 		KrollDict dict = new KrollDict();
 		if (mp3file == null)
@@ -161,7 +161,7 @@ public class Mp3fileProxy extends KrollProxy {
 	
 	@Kroll.method
 	public KrollDict getId3v2Tag() {
-		Mp3File mp3file = Mp3agicModule.createID3FromMP3File(inputFile);
+		Mp3File mp3file = Mp3agicModule.getID3fromMP3File(inputFile);
 		if (mp3file==null) return null;
 		
 		if (mp3file.hasId3v2Tag()) {
@@ -191,7 +191,7 @@ public class Mp3fileProxy extends KrollProxy {
 	
 	@Kroll.method
 	public String getAlbumimage() {
-		Mp3File mp3file = Mp3agicModule.createID3FromMP3File(inputFile);
+		Mp3File mp3file = Mp3agicModule.getID3fromMP3File(inputFile);
 		if (mp3file==null) return null;
 		if (!mp3file.hasId3v2Tag())
 			return null;
