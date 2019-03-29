@@ -56,43 +56,7 @@ public class Mp3fileProxy extends KrollProxy {
 		if (args.length == 0) {
 			throw new IllegalArgumentException("missing path value");
 		}
-		Object readPath = args[0];
-	
-		try {
-			if (readPath instanceof TiFile) {
-				Log.d(LCAT, "file is TiFile");
-				inputFile = TiFileFactory.createTitaniumFile(((TiFile) readPath).getFile().getAbsolutePath(), false);
-			} else {
-				if (readPath instanceof FileProxy) {
-					Log.d(LCAT, "file is FileProxy");
-					inputFile = ((FileProxy) readPath).getBaseFile();
-				} else {
-					if (readPath instanceof TiBaseFile) {
-						Log.d(LCAT, "file is TiBaseFile");
-						inputFile = (TiBaseFile) readPath;
-					} else {
-						Log.d(LCAT, "file is String, Assume path provided");
-						// Assume path provided
-						inputFile = TiFileFactory.createTitaniumFile(readPath.toString(), false);
-					}
-				}
-			}
-			if (inputFile == null) {
-				Log.d(LCAT, "inputFile is null");
-				return;
-			}
-			if (!inputFile.exists()) {
-				Log.d(LCAT, "inputFile doesn't exists");
-				return;
-			}
-
-		} catch (Exception e) {
-			HashMap<String, Object> errEvent = new HashMap<String, Object>();
-			errEvent.put(TiC.PROPERTY_SUCCESS, false);
-			errEvent.put("message", e.getMessage());
-			Log.e(LCAT, e.getMessage());
-		}
-		
+		inputFile = Mp3agicModule.getTiBaseFileFromInput(args[0]);
 		super.handleCreationArgs(createdInModule, args);
 	}
 
