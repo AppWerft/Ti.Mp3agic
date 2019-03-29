@@ -113,7 +113,7 @@ public class Mp3agicModule extends KrollModule
 	}
 	
 	@Kroll.method
-	public KrollDict getId3Tag(String arg) {
+	public KrollDict getId3Tag(Object arg) {
 		TiBaseFile inputFile = getTiBaseFileFromInput(arg);
 		Mp3File mp3file = getID3fromMP3File(inputFile);
 		if (mp3file==null) return null;
@@ -144,7 +144,7 @@ public class Mp3agicModule extends KrollModule
 	
 	
 	@Kroll.method
-	public KrollDict getId3v1Tag(String arg) {
+	public KrollDict getId3v1Tag(Object arg) {
 		TiBaseFile inputFile = getTiBaseFileFromInput(arg);
 		Mp3File mp3file = getID3fromMP3File(inputFile);
 		if (mp3file==null) return null;
@@ -169,7 +169,7 @@ public class Mp3agicModule extends KrollModule
 
 	
 	@Kroll.method
-	public KrollDict getId3v2Tag(String arg) {
+	public KrollDict getId3v2Tag(Object arg) {
 		TiBaseFile inputFile = getTiBaseFileFromInput(arg);
 		Mp3File mp3file = getID3fromMP3File(inputFile);
 		if (mp3file==null) return null;
@@ -200,7 +200,7 @@ public class Mp3agicModule extends KrollModule
 
 	
 	@Kroll.method
-	public String getAlbumimage(String arg) {
+	public String getAlbumimage(Object arg) {
 		TiBaseFile inputFile = getTiBaseFileFromInput(arg);
 		Mp3File mp3file = getID3fromMP3File(inputFile);
 		if (mp3file==null) return null;
