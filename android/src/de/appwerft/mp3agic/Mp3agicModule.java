@@ -113,12 +113,12 @@ public class Mp3agicModule extends KrollModule {
 		}
 	}
 	@Kroll.method
-	public long getDuration(Object arg) {
+	public String getDuration(Object arg) {
 		TiBaseFile inputFile = getTiBaseFileFromInput(arg);
 		Mp3File mp3file = getID3fromMP3File(inputFile);
 		if (mp3file == null)
-			return 0;
-		return mp3file.getLengthInSeconds();
+			return null;
+		return ""+mp3file.getLengthInSeconds();
 	}
 	@Kroll.method
 	public KrollDict getId3Tag(Object arg) {
