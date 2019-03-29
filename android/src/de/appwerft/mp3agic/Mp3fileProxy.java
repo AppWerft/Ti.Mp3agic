@@ -18,6 +18,7 @@ import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
+import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.TiC;
@@ -37,7 +38,7 @@ import ti.modules.titanium.filesystem.FileProxy;
 @Kroll.proxy(creatableInModule = Mp3agicModule.class)
 public class Mp3fileProxy extends KrollProxy {
 	// Standard Debugging variables
-	private static final String LCAT = "TiID3";
+	private static final String LCAT = "⚙️TiID3";
 	private Mp3File mp3file;
 	public static final int TYPE_IMAGE = 0;
 
@@ -49,47 +50,53 @@ public class Mp3fileProxy extends KrollProxy {
 	// Handle creation options
 	@Override
 	public void handleCreationArgs(KrollModule createdInModule, Object[] args) {
-
+		Log.d(LCAT,"Length of options in createMp3file(): " + args.length);
 		if (args.length == 0) {
 			throw new IllegalArgumentException("missing path value");
 		}
 		Object readPath = args[0];
+		Log.d(LCAT,readPath.toString());
+		Log.d(LCAT,readPath.getClass().getName());
+		
 		TiBaseFile inputFile = null;
 		try {
-
 			if (readPath instanceof TiFile) {
+				Log.d(LCAT, "file is TiFile");
 				inputFile = TiFileFactory.createTitaniumFile(((TiFile) readPath).getFile().getAbsolutePath(), false);
 			} else {
 				if (readPath instanceof FileProxy) {
+					Log.d(LCAT, "file is FileProxy");
 					inputFile = ((FileProxy) readPath).getBaseFile();
 				} else {
 					if (readPath instanceof TiBaseFile) {
+						Log.d(LCAT, "file is TiBaseFile");
 						inputFile = (TiBaseFile) readPath;
 					} else {
+						Log.d(LCAT, "file is String, Assume path provided");
 						// Assume path provided
 						inputFile = TiFileFactory.createTitaniumFile(readPath.toString(), false);
 					}
 				}
 			}
 			if (inputFile == null) {
+				Log.d(LCAT, "inputFile is null");
 				return;
 			}
 			if (!inputFile.exists()) {
+				Log.d(LCAT, "inputFile doesn't exists");
 				return;
 			}
 
 		} catch (Exception e) {
-
 			HashMap<String, Object> errEvent = new HashMap<String, Object>();
 			errEvent.put(TiC.PROPERTY_SUCCESS, false);
 			errEvent.put("message", e.getMessage());
-
+			Log.e(LCAT, e.getMessage());
 		}
-
 		try {
 			mp3file = new Mp3File(inputFile.getNativeFile());
 		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
-			// TODO Auto-generated catch block
+			Log.e(LCAT, e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -115,8 +122,10 @@ public class Mp3fileProxy extends KrollProxy {
 	@Kroll.getProperty
 	@Kroll.method
 	public KrollDict getId3v1Tag() {
+		KrollDict dict = new KrollDict();
+		if (mp3file == null)
+			return null;
 		if (mp3file.hasId3v1Tag()) {
-			KrollDict dict = new KrollDict();
 			ID3v1 id3v1Tag = mp3file.getId3v1Tag();
 			dict.put("track", id3v1Tag.getTrack());
 			dict.put("artist", id3v1Tag.getArtist());
@@ -134,18 +143,18 @@ public class Mp3fileProxy extends KrollProxy {
 	}
 
 	/*
-	@Kroll.setProperty
-	@Kroll.method
-	public void setId3v2Tag(Object foo,KrollDict tags) {
-		if (mp3file.hasId3v2Tag()) {
-			
-		}
-	}*/
-	
+	 * @Kroll.setProperty
+	 * 
+	 * @Kroll.method public void setId3v2Tag(Object foo,KrollDict tags) { if
+	 * (mp3file.hasId3v2Tag()) {
+	 * 
+	 * } }
+	 */
+
 	@Kroll.getProperty
 	@Kroll.method
 	public KrollDict getId3v2Tag() {
-		if (mp3file.hasId3v2Tag()) {
+		if (this.mp3file.hasId3v2Tag()) {
 			KrollDict dict = new KrollDict();
 			ID3v2 tag = mp3file.getId3v2Tag();
 			dict.put("track", tag.getTrack());
@@ -232,8 +241,6 @@ public class Mp3fileProxy extends KrollProxy {
 			e1.printStackTrace();
 		}
 		return null;
-	
 
-	
 	}
 }
