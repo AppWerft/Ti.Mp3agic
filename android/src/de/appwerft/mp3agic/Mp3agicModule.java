@@ -100,6 +100,9 @@ public class Mp3agicModule extends KrollModule
 	}
 	
 	public static Mp3File getID3fromMP3File(TiBaseFile inputFile) {
+		Log.d(LCAT,inputFile.toString());
+		Log.d(LCAT,inputFile.getNativeFile().getAbsolutePath());
+		
 		try {
 			return new Mp3File(inputFile.getNativeFile());
 			
@@ -108,6 +111,7 @@ public class Mp3agicModule extends KrollModule
 			return null;
 		}
 	}
+	
 	@Kroll.method
 	public KrollDict getId3Tag(String arg) {
 		TiBaseFile inputFile = getTiBaseFileFromInput(arg);
