@@ -18,19 +18,12 @@ import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
+import org.appcelerator.kroll.common.TiConfig;
 import org.appcelerator.titanium.TiApplication;
-import org.appcelerator.titanium.TiBlob;
 import org.appcelerator.titanium.TiC;
 import org.appcelerator.titanium.io.TiBaseFile;
 import org.appcelerator.titanium.io.TiFile;
 import org.appcelerator.titanium.io.TiFileFactory;
-import org.appcelerator.kroll.common.Log;
-import org.appcelerator.kroll.common.TiConfig;
-import org.appcelerator.titanium.util.TiConvert;
-import org.appcelerator.titanium.proxy.TiViewProxy;
-import org.appcelerator.titanium.view.TiCompositeLayout;
-import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
-import org.appcelerator.titanium.view.TiUIView;
 
 import com.mpatric.mp3agic.ID3v1;
 import com.mpatric.mp3agic.ID3v2;
@@ -38,15 +31,13 @@ import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
-import android.app.Activity;
 import ti.modules.titanium.filesystem.FileProxy;
 
 // This proxy can be created by calling Mp3agic.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule = Mp3agicModule.class)
 public class Mp3fileProxy extends KrollProxy {
 	// Standard Debugging variables
-	private static final String LCAT = "ExampleProxy";
-	private static final boolean DBG = TiConfig.LOGD;
+	private static final String LCAT = "TiID3";
 	private Mp3File mp3file;
 	public static final int TYPE_IMAGE = 0;
 
@@ -142,6 +133,15 @@ public class Mp3fileProxy extends KrollProxy {
 		return null;
 	}
 
+	/*
+	@Kroll.setProperty
+	@Kroll.method
+	public void setId3v2Tag(Object foo,KrollDict tags) {
+		if (mp3file.hasId3v2Tag()) {
+			
+		}
+	}*/
+	
 	@Kroll.getProperty
 	@Kroll.method
 	public KrollDict getId3v2Tag() {
@@ -167,7 +167,6 @@ public class Mp3fileProxy extends KrollProxy {
 			dict.put("copyright", tag.getCopyright());
 			dict.put("url", tag.getUrl());
 			dict.put("encoder", tag.getEncoder());
-			String mime = tag.getAlbumImageMimeType();
 			File temp;
 			try {
 				temp = File.createTempFile("albumimage", "png", TiApplication.getInstance().getCacheDir());
@@ -233,11 +232,8 @@ public class Mp3fileProxy extends KrollProxy {
 			e1.printStackTrace();
 		}
 		return null;
-	}
+	
 
-	@Kroll.method
-	public TiViewProxy createAlbumimage(KrollDict opts) {
-		opts.put("mp3file", mp3file);
-		return new AlbumImageProxy(opts);
+	
 	}
 }

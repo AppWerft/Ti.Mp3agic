@@ -8,71 +8,131 @@
  */
 package de.appwerft.mp3agic;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import org.appcelerator.kroll.KrollDict;
+import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.titanium.TiC;
+import org.appcelerator.titanium.io.TiBaseFile;
+import org.appcelerator.titanium.io.TiFile;
+import org.appcelerator.titanium.io.TiFileFactory;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
 import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
+
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.Mp3File;
+import com.mpatric.mp3agic.UnsupportedTagException;
+
 import org.appcelerator.titanium.view.TiUIView;
 
 import android.app.Activity;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import ti.modules.titanium.filesystem.FileProxy;
 
 // This proxy can be created by calling Ssss.createExample({message: "hello world"})
-@Kroll.proxy(creatableInModule=Mp3agicModule.class)
-public class AlbumImageProxy extends TiViewProxy
-{
+@Kroll.proxy(creatableInModule = Mp3agicModule.class)
+public class AlbumImageProxy extends TiViewProxy {
 	// Standard Debugging variables
 	private static final String LCAT = "ExampleProxy";
 	private static final boolean DBG = TiConfig.LOGD;
+	private Mp3File mp3file;
+	private ImageView albumView;
+	private Bitmap bitmap;
 
-	private class ExampleView extends TiUIView
-	{
-		public ExampleView(TiViewProxy proxy) {
+	private class TiAlbumView extends TiUIView {
+		public TiAlbumView(TiViewProxy proxy) {
 			super(proxy);
-			LayoutArrangement arrangement = LayoutArrangement.DEFAULT;
-
-			if (proxy.hasProperty(TiC.PROPERTY_LAYOUT)) {
-				String layoutProperty = TiConvert.toString(proxy.getProperty(TiC.PROPERTY_LAYOUT));
-				if (layoutProperty.equals(TiC.LAYOUT_HORIZONTAL)) {
-					arrangement = LayoutArrangement.HORIZONTAL;
-				} else if (layoutProperty.equals(TiC.LAYOUT_VERTICAL)) {
-					arrangement = LayoutArrangement.VERTICAL;
-				}
-			}
-			setNativeView(new TiCompositeLayout(proxy.getActivity(), arrangement));
+			LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			LinearLayout container = new LinearLayout(proxy.getActivity());
+			container.setLayoutParams(lp);
+			albumView = new ImageView(proxy.getActivity());
+			albumView.setImageBitmap(bitmap);
+			container.addView(albumView);
+			setNativeView(container);
 		}
 
 		@Override
-		public void processProperties(KrollDict d)
-		{
+		public void processProperties(KrollDict d) {
 			super.processProperties(d);
 		}
 	}
 
-
-	// Constructor
-	public AlbumImageProxy()
-	{
+	public AlbumImageProxy() {
 		super();
 	}
 
-	public AlbumImageProxy(KrollDict opts)
-	{
+	public AlbumImageProxy(KrollDict opts) {
 		super();
 	}
+
 	@Override
-	public TiUIView createView(Activity activity)
-	{
-		TiUIView view = new ExampleView(this);
+	public TiUIView createView(Activity activity) {
+		TiUIView view = new TiAlbumView(this);
 		view.getLayoutParams().autoFillsHeight = true;
 		view.getLayoutParams().autoFillsWidth = true;
 		return view;
+	}
+
+	// Handle creation options
+	@Override
+	public void handleCreationDict(KrollDict opts) {
+		if (!opts.containsKeyAndNotNull(TiC.PROPERTY_IMAGE))
+			throw new IllegalArgumentException("missing property " + TiC.PROPERTY_IMAGE);
+
+		Object readPath = opts.get(TiC.PROPERTY_IMAGE);
+		TiBaseFile inputFile = null;
+		try {
+			if (readPath instanceof TiFile) {
+				inputFile = TiFileFactory.createTitaniumFile(((TiFile) readPath).getFile().getAbsolutePath(), false);
+			} else {
+				if (readPath instanceof FileProxy) {
+					inputFile = ((FileProxy) readPath).getBaseFile();
+				} else {
+					if (readPath instanceof TiBaseFile) {
+						inputFile = (TiBaseFile) readPath;
+					} else {
+						// Assume path provided
+						inputFile = TiFileFactory.createTitaniumFile(readPath.toString(), false);
+					}
+				}
+			}
+			if (inputFile == null) {
+				return;
+			}
+			if (!inputFile.exists()) {
+				return;
+			}
+
+		} catch (Exception e) {
+			HashMap<String, Object> errEvent = new HashMap<String, Object>();
+			errEvent.put(TiC.PROPERTY_SUCCESS, false);
+			errEvent.put("message", e.getMessage());
+		}
+
+		try {
+			mp3file = new Mp3File(inputFile.getNativeFile());
+			if (mp3file.hasId3v2Tag()) {
+				ID3v2 tag = mp3file.getId3v2Tag();
+				byte[] imageblob = tag.getAlbumImage();
+				bitmap = BitmapFactory.decodeByteArray(imageblob, 0, imageblob.length);
+
+			}
+		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

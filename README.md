@@ -37,8 +37,10 @@ and assets into the application.
 
 ```js
 import ID3Module from 'de.appwerft.mp3agic';
-const ID3 = ID3Module.createID3(Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory,
-    'test.mp3'));
+
+const mp3file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory,
+    'test.mp3');
+const ID3 = ID3Module.createID3(mp3file);
 
 ID3.getLengthInSeconds();
 ID3.getBitrate();
@@ -47,12 +49,12 @@ ID3.getSampleRate();
 ID3.getId3v1Tag();
 ID3.getId3v2Tag();
 
-Ti.UI.createImageView({
-	image : ID3.getAlbumimage() // path to temp file
-})    
-
-// or direct:
-ID3.createAlbumView({width:100,height:100})    
-    
+if (ID3.hasId3v2Tag) {
+	ID3Module.createAlbumView({
+		width : 100,
+		height : 100,
+		image : mp3file
+	})    
+}    
 ```
 

@@ -32,7 +32,6 @@ private:
 	static v8::Persistent<v8::FunctionTemplate> proxyTemplate;
 
 	// Methods -----------------------------------------------------------
-	static void createAlbumimage(const v8::FunctionCallbackInfo<v8::Value>&);
 	static void getBitrate(const v8::FunctionCallbackInfo<v8::Value>&);
 	static void getLengthInSeconds(const v8::FunctionCallbackInfo<v8::Value>&);
 	static void getSampleRate(const v8::FunctionCallbackInfo<v8::Value>&);
