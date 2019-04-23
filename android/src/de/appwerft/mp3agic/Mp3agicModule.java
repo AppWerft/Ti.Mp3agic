@@ -18,7 +18,8 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
-
+import org.appcelerator.kroll.common.Log;
+import org.appcelerator.kroll.common.TiConfig;
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.TiC;
 import org.appcelerator.titanium.io.TiBaseFile;
@@ -33,19 +34,12 @@ import com.mpatric.mp3agic.UnsupportedTagException;
 
 import ti.modules.titanium.filesystem.FileProxy;
 
-import org.appcelerator.kroll.common.Log;
-import org.appcelerator.kroll.common.TiConfig;
-
+@SuppressWarnings("deprecation")
 @Kroll.module(name = "Mp3agic", id = "de.appwerft.mp3agic")
 public class Mp3agicModule extends KrollModule {
 
-	// Standard Debugging variables
-	private static final String LCAT = "Mp3agicModule";
-	private static final boolean DBG = TiConfig.LOGD;
-
-	// You can define constants with @Kroll.constant, for example:
-	// @Kroll.constant public static final String EXTERNAL_NAME = value;
-
+	public static final String LCAT = "Mp3agicModule";
+	
 	public Mp3agicModule() {
 		super();
 	}
@@ -59,8 +53,6 @@ public class Mp3agicModule extends KrollModule {
 			Log.e(LCAT, "parameter must be a string (path) or a file object");
 			return null;
 		}
-
-		Log.d(LCAT, readPath.getClass().getName());
 		TiBaseFile inputFile = null;
 		try {
 			if (readPath instanceof TiFile) {
@@ -112,14 +104,17 @@ public class Mp3agicModule extends KrollModule {
 			return null;
 		}
 	}
+
 	@Kroll.method
-	public String getDuration(Object arg) {
+	public Long getDuration(Object arg) {
+		Log.d(LCAT,"getDuration");
 		TiBaseFile inputFile = getTiBaseFileFromInput(arg);
 		Mp3File mp3file = getID3fromMP3File(inputFile);
 		if (mp3file == null)
 			return null;
-		return ""+mp3file.getLengthInSeconds();
+		return  mp3file.getLengthInSeconds();
 	}
+
 	@Kroll.method
 	public KrollDict getId3Tag(Object arg) {
 		TiBaseFile inputFile = getTiBaseFileFromInput(arg);
@@ -186,18 +181,18 @@ public class Mp3agicModule extends KrollModule {
 			KrollDict dict = new KrollDict();
 			ID3v2 tag = mp3file.getId3v2Tag();
 			dict.put("track", tag.getTrack());
-			dict.put("artist", tag.getArtist());
-			dict.put("title", tag.getTitle());
-			dict.put("album", tag.getAlbum());
+			dict.put("artist", StringEscapeUtils.unescapeHtml4(tag.getArtist()));
+			dict.put("title", StringEscapeUtils.unescapeHtml4(tag.getTitle()));
+			dict.put("album", StringEscapeUtils.unescapeHtml4(tag.getAlbum()));
 			dict.put("year", tag.getYear());
 			dict.put("genre", tag.getGenre());
-			dict.put("description", tag.getGenreDescription());
-			dict.put("comment",  StringEscapeUtils.unescapeHtml4(tag.getComment()));
+			dict.put("description", StringEscapeUtils.unescapeHtml4(tag.getGenreDescription()));
+			dict.put("comment", StringEscapeUtils.unescapeHtml4(tag.getComment()));
 			dict.put("lyrics", StringEscapeUtils.unescapeHtml4(tag.getLyrics()));
-			dict.put("composer", tag.getComposer());
-			dict.put("publisher", tag.getPublisher());
-			dict.put("originalartist", tag.getOriginalArtist());
-			dict.put("albumartist", tag.getAlbumArtist());
+			dict.put("composer", StringEscapeUtils.unescapeHtml4(tag.getComposer()));
+			dict.put("publisher", StringEscapeUtils.unescapeHtml4(tag.getPublisher()));
+			dict.put("originalartist", StringEscapeUtils.unescapeHtml4(tag.getOriginalArtist()));
+			dict.put("albumartist", StringEscapeUtils.unescapeHtml4(tag.getAlbumArtist()));
 			dict.put("copyright", tag.getCopyright());
 			dict.put("url", tag.getUrl());
 			dict.put("encoder", tag.getEncoder());
@@ -215,11 +210,15 @@ public class Mp3agicModule extends KrollModule {
 		if (!mp3file.hasId3v2Tag())
 			return null;
 		ID3v2 tag = mp3file.getId3v2Tag();
+		
+		// getting suffix via mime:
 		String mime = tag.getAlbumImageMimeType();
 		String[] parts = mime.split("/");
 		String suffix = ".png";
 		if (parts.length > 1)
 			suffix = "." + parts[1];
+		
+		
 		File temp;
 		try {
 			temp = File.createTempFile("albumimage", suffix, TiApplication.getInstance().getCacheDir());
@@ -247,5 +246,5 @@ public class Mp3agicModule extends KrollModule {
 		return null;
 
 	}
-      
+
 }

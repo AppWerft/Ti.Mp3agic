@@ -45,8 +45,8 @@ import ti.modules.titanium.filesystem.FileProxy;
 @Kroll.proxy(creatableInModule = Mp3agicModule.class)
 public class AlbumImageProxy extends TiViewProxy {
 	// Standard Debugging variables
-	private static final String LCAT = "ExampleProxy";
-	private static final boolean DBG = TiConfig.LOGD;
+	private static final String LCAT = Mp3agicModule.LCAT;
+	
 	private Mp3File mp3file;
 	private ImageView albumView;
 	private Bitmap bitmap;
@@ -89,7 +89,6 @@ public class AlbumImageProxy extends TiViewProxy {
 	@Override
 	public void handleCreationDict(KrollDict opts) {
 		TiBaseFile inputFile = null;
-
 		if (!opts.containsKeyAndNotNull(TiC.PROPERTY_IMAGE))
 			throw new IllegalArgumentException("missing property " + TiC.PROPERTY_IMAGE);
 		inputFile = Mp3agicModule.getTiBaseFileFromInput(opts.get(TiC.PROPERTY_IMAGE));
@@ -99,8 +98,10 @@ public class AlbumImageProxy extends TiViewProxy {
 			if (mp3file.hasId3v2Tag()) {
 				ID3v2 tag = mp3file.getId3v2Tag();
 				byte[] imageblob = tag.getAlbumImage();
-				bitmap = BitmapFactory.decodeByteArray(imageblob, 0, imageblob.length);
-
+				Log.d(LCAT,tag.getAlbumImageMimeType());
+				Log.d(LCAT,"Length: " +imageblob.length);
+				BitmapFactory.Options options = new BitmapFactory.Options() ;
+				bitmap = BitmapFactory.decodeByteArray(imageblob, 0, imageblob.length,options);
 			}
 		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
 			// TODO Auto-generated catch block

@@ -13,7 +13,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/Users/fuerst/Documents/APPC_WORKSPACE/AUDIO/Ti.Mp3agic/android/lib/mp3agic-0.9.0.jar"/>
-	<classpathentry kind="lib" path="/Library/Application Support/Titanium/mobilesdk/osx/7.0.1.GA/android/modules/titanium-filesystem.jar"/>
 	<classpathentry kind="lib" path="/Users/fuerst/Documents/APPC_WORKSPACE/AUDIO/Ti.Mp3agic/android/lib/commons-lang3-3.8.1.jar"/>
+	<classpathentry kind="lib" path="/Users/fuerst/Library/Application Support/Titanium/mobilesdk/osx/8.0.0.GA/android/modules/titanium-filesystem.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
