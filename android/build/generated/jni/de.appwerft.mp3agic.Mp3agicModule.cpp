@@ -237,9 +237,9 @@ void Mp3agicModule::getDuration(const FunctionCallbackInfo<Value>& args)
 	}
 	static jmethodID methodID = NULL;
 	if (!methodID) {
-		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getDuration", "(Ljava/lang/Object;)Ljava/lang/String;");
+		methodID = env->GetMethodID(Mp3agicModule::javaClass, "getDuration", "(Ljava/lang/Object;)Ljava/lang/Long;");
 		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getDuration' with signature '(Ljava/lang/Object;)Ljava/lang/String;'";
+			const char *error = "Couldn't find proxy method 'getDuration' with signature '(Ljava/lang/Object;)Ljava/lang/Long;'";
 			LOGE(TAG, error);
 				titanium::JSException::Error(isolate, error);
 				return;
@@ -290,7 +290,7 @@ void Mp3agicModule::getDuration(const FunctionCallbackInfo<Value>& args)
 		args.GetReturnValue().Set(v8::Undefined(isolate));
 		return;
 	}
-	jstring jResult = (jstring)env->CallObjectMethodA(javaProxy, methodID, jArguments);
+	jobject jResult = (jobject)env->CallObjectMethodA(javaProxy, methodID, jArguments);
 
 
 
@@ -314,7 +314,7 @@ void Mp3agicModule::getDuration(const FunctionCallbackInfo<Value>& args)
 		return;
 	}
 
-	Local<Value> v8Result = titanium::TypeConverter::javaStringToJsString(isolate, env, jResult);
+	Local<Value> v8Result = titanium::TypeConverter::javaObjectToJsValue(isolate, env, jResult);
 
 	env->DeleteLocalRef(jResult);
 
