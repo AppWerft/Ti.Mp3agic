@@ -100,8 +100,9 @@ public class AlbumImageProxy extends TiViewProxy {
 				byte[] imageblob = tag.getAlbumImage();
 				Log.d(LCAT,tag.getAlbumImageMimeType());
 				Log.d(LCAT,"Length: " +imageblob.length);
-				BitmapFactory.Options options = new BitmapFactory.Options() ;
-				bitmap = BitmapFactory.decodeByteArray(imageblob, 0, imageblob.length,options);
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.outMimeType = tag.getAlbumImageMimeType();
+				bitmap = BitmapFactory.decodeByteArray(imageblob, 0, imageblob.length, options);
 			}
 		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
 			// TODO Auto-generated catch block
