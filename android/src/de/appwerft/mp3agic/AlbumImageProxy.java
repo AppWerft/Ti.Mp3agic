@@ -106,13 +106,13 @@ public class AlbumImageProxy extends TiViewProxy {
 	// https://github.com/mpatric/mp3agic/issues/135
 	private Bitmap getCoverImage(String filePath) {
 		Log.d(LCAT,"getCoverImage: "+filePath);
-		MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-		mmr.setDataSource(filePath);
-		byte[] imageData = mmr.getEmbeddedPicture();
+		MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+		mediaMetadataRetriever.setDataSource(filePath);
+		byte[] imageData = mediaMetadataRetriever.getEmbeddedPicture();
 		Log.d(LCAT,bytesToHex(imageData));
 		if (imageData != null) {
 			return BitmapFactory.decodeStream(new ByteArrayInputStream(imageData));
-		}
+		} else Log.w(LCAT,"cannot decode strean for bitmap");
 		return null;
 	}
 	 private static String bytesToHex(byte[] hashInBytes) {
