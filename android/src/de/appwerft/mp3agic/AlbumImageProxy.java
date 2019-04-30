@@ -9,6 +9,7 @@
 package de.appwerft.mp3agic;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -96,7 +97,7 @@ public class AlbumImageProxy extends TiViewProxy {
 		try {
 			mp3file = new Mp3File(inputFile.getNativeFile());
 			if (mp3file.hasId3v2Tag()) {
-				bitmap=getCoverImage(inputFile.nativePath());
+				bitmap=getCoverImage(inputFile.getNativeFile().getPath());
 			}
 		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
 			e.printStackTrace();
@@ -104,10 +105,9 @@ public class AlbumImageProxy extends TiViewProxy {
 	}
 
 	// https://github.com/mpatric/mp3agic/issues/135
-	private Bitmap getCoverImage(String filePath) {
-		Log.d(LCAT,"getCoverImage: "+filePath);
+	private Bitmap getCoverImage(String path) {
 		MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-		mediaMetadataRetriever.setDataSource(filePath);
+		mediaMetadataRetriever.setDataSource(path);
 		byte[] imageData = mediaMetadataRetriever.getEmbeddedPicture();
 		Log.d(LCAT,bytesToHex(imageData));
 		if (imageData != null) {
