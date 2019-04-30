@@ -74,9 +74,6 @@ public class AlbumImageProxy extends TiViewProxy {
 		super();
 	}
 
-	public AlbumImageProxy(KrollDict opts) {
-		super();
-	}
 
 	@Override
 	public TiUIView createView(Activity activity) {
@@ -108,6 +105,7 @@ public class AlbumImageProxy extends TiViewProxy {
 
 	// https://github.com/mpatric/mp3agic/issues/135
 	private Bitmap getCoverImage(String filePath) {
+		Log.d(LCAT,"getCoverImage: "+filePath);
 		MediaMetadataRetriever mmr = new MediaMetadataRetriever();
 		mmr.setDataSource(filePath);
 		byte[] imageData = mmr.getEmbeddedPicture();
