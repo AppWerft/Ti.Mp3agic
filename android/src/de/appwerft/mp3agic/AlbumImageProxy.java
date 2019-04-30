@@ -8,6 +8,7 @@
  */
 package de.appwerft.mp3agic;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -25,7 +26,7 @@ import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
-
+import android.media.MediaMetadataRetriever;
 import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
@@ -46,7 +47,7 @@ import ti.modules.titanium.filesystem.FileProxy;
 public class AlbumImageProxy extends TiViewProxy {
 	// Standard Debugging variables
 	private static final String LCAT = Mp3agicModule.LCAT;
-	
+
 	private Mp3File mp3file;
 	private ImageView albumView;
 	private Bitmap bitmap;
@@ -96,18 +97,31 @@ public class AlbumImageProxy extends TiViewProxy {
 		try {
 			mp3file = new Mp3File(inputFile.getNativeFile());
 			if (mp3file.hasId3v2Tag()) {
-				ID3v2 tag = mp3file.getId3v2Tag();
-				byte[] imageblob = tag.getAlbumImage();
-				Log.d(LCAT,tag.getAlbumImageMimeType());
-				Log.d(LCAT,"Length: " +imageblob.length);
-				BitmapFactory.Options options = new BitmapFactory.Options();
-				options.outMimeType = tag.getAlbumImageMimeType();
-				bitmap = BitmapFactory.decodeByteArray(imageblob, 0, imageblob.length, options);
+				bitmap=getCoverImage(inputFile.nativePath());
 			}
 		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	// https://github.com/mpatric/mp3agic/issues/135
+	private Bitmap getCoverImage(String filePath) {
+		MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+		mmr.setDataSource(filePath);
+		byte[] imageData = mmr.getEmbeddedPicture();
+		Log.d(LCAT,bytesToHex(imageData));
+		if (imageData != null) {
+			return BitmapFactory.decodeStream(new ByteArrayInputStream(imageData));
+		}
+		return null;
+	}
+	 private static String bytesToHex(byte[] hashInBytes) {
+
+	        StringBuilder sb = new StringBuilder();
+	        for (byte b : hashInBytes) {
+	            sb.append(String.format("%02x", b));
+	        }
+	        return sb.toString();
+
+	    }
 }
