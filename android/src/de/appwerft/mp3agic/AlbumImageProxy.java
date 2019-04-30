@@ -93,6 +93,8 @@ public class AlbumImageProxy extends TiViewProxy {
 		if (!opts.containsKeyAndNotNull(TiC.PROPERTY_IMAGE))
 			throw new IllegalArgumentException("missing property " + TiC.PROPERTY_IMAGE);
 		inputFile = Mp3agicModule.getTiBaseFileFromInput(opts.get(TiC.PROPERTY_IMAGE));
+		Log.d(LCAT,inputFile.nativePath());
+		if (inputFile != null) {
 		Mp3File mp3file = Mp3agicModule.getID3fromMP3File(inputFile);
 		try {
 			mp3file = new Mp3File(inputFile.getNativeFile());
@@ -101,7 +103,7 @@ public class AlbumImageProxy extends TiViewProxy {
 			}
 		} catch (UnsupportedTagException | InvalidDataException | IOException e) {
 			e.printStackTrace();
-		}
+		}}
 	}
 
 	// https://github.com/mpatric/mp3agic/issues/135
